@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_fe07a9c9d5c8d1946c94d6460efe78fe {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_fe07a9c9d5c8d1946c94d6460efe78fe" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_fe07a9c9d5c8d1946c94d6460efe78fe = L.map(
+                "map_fe07a9c9d5c8d1946c94d6460efe78fe",
+                {
+                    center: [35.8617, 104.1954],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 5,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_1f0c2d80cfad320e9e464a6448a32dfd = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var marker_ba75bfcd92fc77ef6ad3529e613dfa1a = L.marker(
+                [34.7466, 113.6254],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_bc90173205bc20af25bb8aabfa554c06 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_ba75bfcd92fc77ef6ad3529e613dfa1a.setIcon(icon_bc90173205bc20af25bb8aabfa554c06);
+        
+    
+        var popup_daa149c777c917d32f4b219a37a99656 = L.popup({"maxWidth": 300});
+
+        
+            var html_d52254fce60fe7b7b975a7a34beb60dd = $(`<div id="html_d52254fce60fe7b7b975a7a34beb60dd" style="width: 100.0%; height: 100.0%;">D1: 抵達鄭州，搭乘高鐵前往天水。 D8: 參觀兵馬俑、驪山後返回鄭州。 D9: 前往登封少林寺，回鄭州自由購物。 D10: 送機返回台北。 住宿：鄭州建國飯店。</div>`)[0];
+            popup_daa149c777c917d32f4b219a37a99656.setContent(html_d52254fce60fe7b7b975a7a34beb60dd);
+        
+
+        marker_ba75bfcd92fc77ef6ad3529e613dfa1a.bindPopup(popup_daa149c777c917d32f4b219a37a99656)
+        ;
+
+        
+    
+    
+            marker_ba75bfcd92fc77ef6ad3529e613dfa1a.bindTooltip(
+                `<div>
+                     鄭州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_abc1671fa18daefbe39f18568b64d939 = L.marker(
+                [34.5809, 105.7249],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_be79f2871725f22d126a8483b113e593 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_abc1671fa18daefbe39f18568b64d939.setIcon(icon_be79f2871725f22d126a8483b113e593);
+        
+    
+        var popup_920f599ac39cd1774bbcebc071b5a7c3 = L.popup({"maxWidth": 300});
+
+        
+            var html_6ad0b6ecb58ae3ab40691a4fa6010546 = $(`<div id="html_6ad0b6ecb58ae3ab40691a4fa6010546" style="width: 100.0%; height: 100.0%;">D1: 高鐵抵達天水。 D2: 參觀麥積山石窟，前往蘭州。 住宿：柏霖艾菲酒店。</div>`)[0];
+            popup_920f599ac39cd1774bbcebc071b5a7c3.setContent(html_6ad0b6ecb58ae3ab40691a4fa6010546);
+        
+
+        marker_abc1671fa18daefbe39f18568b64d939.bindPopup(popup_920f599ac39cd1774bbcebc071b5a7c3)
+        ;
+
+        
+    
+    
+            marker_abc1671fa18daefbe39f18568b64d939.bindTooltip(
+                `<div>
+                     天水
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7f652abd0292520257e8a3d4a6803997 = L.marker(
+                [36.0611, 103.8343],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_fcfcab0de74db95e28a0e40a01c40c4d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_7f652abd0292520257e8a3d4a6803997.setIcon(icon_fcfcab0de74db95e28a0e40a01c40c4d);
+        
+    
+        var popup_73011c038b3a041d7e12e2a1e81014af = L.popup({"maxWidth": 300});
+
+        
+            var html_a8a0ef89baeaf9dcbb1a5140a3526e47 = $(`<div id="html_a8a0ef89baeaf9dcbb1a5140a3526e47" style="width: 100.0%; height: 100.0%;">D2: 遊覽黃河遊覽區，夜宿蘭州。 D3: 前往景泰黃河石林。 住宿：蘭州黃河美華酒店。</div>`)[0];
+            popup_73011c038b3a041d7e12e2a1e81014af.setContent(html_a8a0ef89baeaf9dcbb1a5140a3526e47);
+        
+
+        marker_7f652abd0292520257e8a3d4a6803997.bindPopup(popup_73011c038b3a041d7e12e2a1e81014af)
+        ;
+
+        
+    
+    
+            marker_7f652abd0292520257e8a3d4a6803997.bindTooltip(
+                `<div>
+                     蘭州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_acc84c2419136664ae4a0338f602cf0f = L.marker(
+                [37.1466, 104.0636],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_d96cc012227518e24a40773453a3abc9 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_acc84c2419136664ae4a0338f602cf0f.setIcon(icon_d96cc012227518e24a40773453a3abc9);
+        
+    
+        var popup_20a422b126dd8efcf7aec549b984aa66 = L.popup({"maxWidth": 300});
+
+        
+            var html_2664db92e8b13fb2fd1f87fdd7766836 = $(`<div id="html_2664db92e8b13fb2fd1f87fdd7766836" style="width: 100.0%; height: 100.0%;">D3: 參觀黃河石林，隨後前往武威。 住宿：金陵大酒店。</div>`)[0];
+            popup_20a422b126dd8efcf7aec549b984aa66.setContent(html_2664db92e8b13fb2fd1f87fdd7766836);
+        
+
+        marker_acc84c2419136664ae4a0338f602cf0f.bindPopup(popup_20a422b126dd8efcf7aec549b984aa66)
+        ;
+
+        
+    
+    
+            marker_acc84c2419136664ae4a0338f602cf0f.bindTooltip(
+                `<div>
+                     景泰
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6ef75aa843ec9eb075fe2fae0affae2e = L.marker(
+                [37.9282, 102.637],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_76681bd9faa8e32dfdc4b5ebc684de3f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_6ef75aa843ec9eb075fe2fae0affae2e.setIcon(icon_76681bd9faa8e32dfdc4b5ebc684de3f);
+        
+    
+        var popup_05a804dff28c6882bc64ff1e4f6f9fc9 = L.popup({"maxWidth": 300});
+
+        
+            var html_73ddbb83af8529297f65a77e84e55fbe = $(`<div id="html_73ddbb83af8529297f65a77e84e55fbe" style="width: 100.0%; height: 100.0%;">D4: 前往張掖，參觀七彩丹霞。 住宿：嘉峪關諾金酒店。</div>`)[0];
+            popup_05a804dff28c6882bc64ff1e4f6f9fc9.setContent(html_73ddbb83af8529297f65a77e84e55fbe);
+        
+
+        marker_6ef75aa843ec9eb075fe2fae0affae2e.bindPopup(popup_05a804dff28c6882bc64ff1e4f6f9fc9)
+        ;
+
+        
+    
+    
+            marker_6ef75aa843ec9eb075fe2fae0affae2e.bindTooltip(
+                `<div>
+                     武威
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_d4946b2df2b4a5a923a43f44283f9219 = L.marker(
+                [38.9252, 100.4498],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_835d16c729f4fe63cb833f4b968b51a1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_d4946b2df2b4a5a923a43f44283f9219.setIcon(icon_835d16c729f4fe63cb833f4b968b51a1);
+        
+    
+        var popup_cdcb6928a10e87ed1ebdbabbcc71a296 = L.popup({"maxWidth": 300});
+
+        
+            var html_fd95394c80f9e0e67ed8136096576092 = $(`<div id="html_fd95394c80f9e0e67ed8136096576092" style="width: 100.0%; height: 100.0%;">D4: 參觀七彩丹霞，隨後前往嘉峪關。 住宿：嘉峪關諾金酒店。</div>`)[0];
+            popup_cdcb6928a10e87ed1ebdbabbcc71a296.setContent(html_fd95394c80f9e0e67ed8136096576092);
+        
+
+        marker_d4946b2df2b4a5a923a43f44283f9219.bindPopup(popup_cdcb6928a10e87ed1ebdbabbcc71a296)
+        ;
+
+        
+    
+    
+            marker_d4946b2df2b4a5a923a43f44283f9219.bindTooltip(
+                `<div>
+                     張掖
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b86dfaf6bce135e029b3c5a547c83e98 = L.marker(
+                [39.7731, 98.2892],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_f9844485ef0feddffd22caf01f12d8dd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_b86dfaf6bce135e029b3c5a547c83e98.setIcon(icon_f9844485ef0feddffd22caf01f12d8dd);
+        
+    
+        var popup_9dde73769b8c122f820a8ee4224a8487 = L.popup({"maxWidth": 300});
+
+        
+            var html_b432828795f0bcfae485d30ede3f558c = $(`<div id="html_b432828795f0bcfae485d30ede3f558c" style="width: 100.0%; height: 100.0%;">D5: 參觀嘉峪關城樓，前往瓜州。 住宿：敦煌中州國際酒店。</div>`)[0];
+            popup_9dde73769b8c122f820a8ee4224a8487.setContent(html_b432828795f0bcfae485d30ede3f558c);
+        
+
+        marker_b86dfaf6bce135e029b3c5a547c83e98.bindPopup(popup_9dde73769b8c122f820a8ee4224a8487)
+        ;
+
+        
+    
+    
+            marker_b86dfaf6bce135e029b3c5a547c83e98.bindTooltip(
+                `<div>
+                     嘉峪關
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_c2d03c58a8b6ac546f36691e9863f6c1 = L.marker(
+                [40.5206, 95.7826],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_3355037b52a826469afe0d9df422967f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_c2d03c58a8b6ac546f36691e9863f6c1.setIcon(icon_3355037b52a826469afe0d9df422967f);
+        
+    
+        var popup_5f21c4f4c1b35d280d41d40be79d7eca = L.popup({"maxWidth": 300});
+
+        
+            var html_3ecfcd17319cd8e8df50e0877db75ce0 = $(`<div id="html_3ecfcd17319cd8e8df50e0877db75ce0" style="width: 100.0%; height: 100.0%;">D5: 參觀大地之子、海市蜃樓，隨後前往敦煌。 住宿：敦煌中州國際酒店。</div>`)[0];
+            popup_5f21c4f4c1b35d280d41d40be79d7eca.setContent(html_3ecfcd17319cd8e8df50e0877db75ce0);
+        
+
+        marker_c2d03c58a8b6ac546f36691e9863f6c1.bindPopup(popup_5f21c4f4c1b35d280d41d40be79d7eca)
+        ;
+
+        
+    
+    
+            marker_c2d03c58a8b6ac546f36691e9863f6c1.bindTooltip(
+                `<div>
+                     瓜州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_60888a89828532f3205ac5b202c7fdee = L.marker(
+                [40.1421, 94.6614],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_27eaf528b6d4ca29b06b2b379f49eb11 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_60888a89828532f3205ac5b202c7fdee.setIcon(icon_27eaf528b6d4ca29b06b2b379f49eb11);
+        
+    
+        var popup_1a386d1a1f6c9e5049b73cfcf950db9e = L.popup({"maxWidth": 300});
+
+        
+            var html_26ee67337fffc738ded6a10f54e1a507 = $(`<div id="html_26ee67337fffc738ded6a10f54e1a507" style="width: 100.0%; height: 100.0%;">D5: 參觀陽關。 D6: 參觀莫高窟、鳴沙山月牙泉，享用烤全羊晚餐。 D7: 參觀古城、西千佛洞，搭機前往西安。 住宿：敦煌中州國際酒店。</div>`)[0];
+            popup_1a386d1a1f6c9e5049b73cfcf950db9e.setContent(html_26ee67337fffc738ded6a10f54e1a507);
+        
+
+        marker_60888a89828532f3205ac5b202c7fdee.bindPopup(popup_1a386d1a1f6c9e5049b73cfcf950db9e)
+        ;
+
+        
+    
+    
+            marker_60888a89828532f3205ac5b202c7fdee.bindTooltip(
+                `<div>
+                     敦煌
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_e8705f6130cb3359a0e72499c021b936 = L.marker(
+                [34.3416, 108.9398],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_ecdcc614258c701e2298042ab29e2864 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_e8705f6130cb3359a0e72499c021b936.setIcon(icon_ecdcc614258c701e2298042ab29e2864);
+        
+    
+        var popup_c96ccc5dc506b9bb08e4a97caea8e22f = L.popup({"maxWidth": 300});
+
+        
+            var html_6a6eaf1a6096e2f79384860f8e4c05ae = $(`<div id="html_6a6eaf1a6096e2f79384860f8e4c05ae" style="width: 100.0%; height: 100.0%;">D7: 抵達西安。 D8: 參觀兵馬俑、驪山，搭高鐵返回鄭州。 住宿：西安絡繹坊LFY共用公寓。</div>`)[0];
+            popup_c96ccc5dc506b9bb08e4a97caea8e22f.setContent(html_6a6eaf1a6096e2f79384860f8e4c05ae);
+        
+
+        marker_e8705f6130cb3359a0e72499c021b936.bindPopup(popup_c96ccc5dc506b9bb08e4a97caea8e22f)
+        ;
+
+        
+    
+    
+            marker_e8705f6130cb3359a0e72499c021b936.bindTooltip(
+                `<div>
+                     西安
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_40a48349683e07679d181c94e4de09ee = L.marker(
+                [34.454, 113.0504],
+                {}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+    
+            var icon_a5acf098f151cfce8662bf777b71ca5b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_40a48349683e07679d181c94e4de09ee.setIcon(icon_a5acf098f151cfce8662bf777b71ca5b);
+        
+    
+        var popup_77baa921a98b2f4a1e54f01ea9470a0b = L.popup({"maxWidth": 300});
+
+        
+            var html_241a1b616c898427197715493b8f5702 = $(`<div id="html_241a1b616c898427197715493b8f5702" style="width: 100.0%; height: 100.0%;">D9: 參觀少林寺、塔林，欣賞少林功夫表演，返回鄭州。 住宿：鄭州建國飯店。</div>`)[0];
+            popup_77baa921a98b2f4a1e54f01ea9470a0b.setContent(html_241a1b616c898427197715493b8f5702);
+        
+
+        marker_40a48349683e07679d181c94e4de09ee.bindPopup(popup_77baa921a98b2f4a1e54f01ea9470a0b)
+        ;
+
+        
+    
+    
+            marker_40a48349683e07679d181c94e4de09ee.bindTooltip(
+                `<div>
+                     登封
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_4c0fe26b93cc5aba65cd7fe24f2ed5e2 = L.polyline(
+                [[34.7466, 113.6254], [34.5809, 105.7249], [36.0611, 103.8343], [37.1466, 104.0636], [37.9282, 102.637], [38.9252, 100.4498], [39.7731, 98.2892], [40.5206, 95.7826], [40.1421, 94.6614], [34.3416, 108.9398], [34.454, 113.0504], [34.7466, 113.6254]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_fe07a9c9d5c8d1946c94d6460efe78fe);
+        
+</script>
+</html>
