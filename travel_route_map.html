@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_337b114a44fde2411dbea8734c042447 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_337b114a44fde2411dbea8734c042447" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_337b114a44fde2411dbea8734c042447 = L.map(
+                "map_337b114a44fde2411dbea8734c042447",
+                {
+                    center: [35.8617, 104.1954],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 5,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a1bfa7ad65f5fc17ec97e307127a1d39 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+            var marker_6a8fc71fe62f9b08e434607437ff4586 = L.marker(
+                [34.7466, 113.6254],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_929a9b148dd8c4c5da1615a65e5357e0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d6e98aa64c7666a6575b9eaeda1b007e = $(`<div id="html_d6e98aa64c7666a6575b9eaeda1b007e" style="width: 100.0%; height: 100.0%;">鄭州</div>`)[0];
+            popup_929a9b148dd8c4c5da1615a65e5357e0.setContent(html_d6e98aa64c7666a6575b9eaeda1b007e);
+        
+
+        marker_6a8fc71fe62f9b08e434607437ff4586.bindPopup(popup_929a9b148dd8c4c5da1615a65e5357e0)
+        ;
+
+        
+    
+    
+            marker_6a8fc71fe62f9b08e434607437ff4586.bindTooltip(
+                `<div>
+                     鄭州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_744e642866f7bbbbe7833d6ae29d7e14 = L.marker(
+                [34.5809, 105.7249],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_d50853889878a790926806e2b0aa5f9f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_78852e51e4c4a9b26b672203e6ded686 = $(`<div id="html_78852e51e4c4a9b26b672203e6ded686" style="width: 100.0%; height: 100.0%;">天水</div>`)[0];
+            popup_d50853889878a790926806e2b0aa5f9f.setContent(html_78852e51e4c4a9b26b672203e6ded686);
+        
+
+        marker_744e642866f7bbbbe7833d6ae29d7e14.bindPopup(popup_d50853889878a790926806e2b0aa5f9f)
+        ;
+
+        
+    
+    
+            marker_744e642866f7bbbbe7833d6ae29d7e14.bindTooltip(
+                `<div>
+                     天水
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7f36d644a66f7d37a62aa74a42466a66 = L.marker(
+                [36.0611, 103.8343],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_3c47d62d6b06ebd3b1f47c28147a71db = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7b79b6f61482fc63b7ad96cfca769dbf = $(`<div id="html_7b79b6f61482fc63b7ad96cfca769dbf" style="width: 100.0%; height: 100.0%;">蘭州</div>`)[0];
+            popup_3c47d62d6b06ebd3b1f47c28147a71db.setContent(html_7b79b6f61482fc63b7ad96cfca769dbf);
+        
+
+        marker_7f36d644a66f7d37a62aa74a42466a66.bindPopup(popup_3c47d62d6b06ebd3b1f47c28147a71db)
+        ;
+
+        
+    
+    
+            marker_7f36d644a66f7d37a62aa74a42466a66.bindTooltip(
+                `<div>
+                     蘭州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_4e559f4b4ee97a5c8e7d1cc3084c276b = L.marker(
+                [37.1466, 104.0636],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_d16ce3ed8ab09bc26b04374674a60ee9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1b220e83009d9a956f1c51d563e84892 = $(`<div id="html_1b220e83009d9a956f1c51d563e84892" style="width: 100.0%; height: 100.0%;">景泰</div>`)[0];
+            popup_d16ce3ed8ab09bc26b04374674a60ee9.setContent(html_1b220e83009d9a956f1c51d563e84892);
+        
+
+        marker_4e559f4b4ee97a5c8e7d1cc3084c276b.bindPopup(popup_d16ce3ed8ab09bc26b04374674a60ee9)
+        ;
+
+        
+    
+    
+            marker_4e559f4b4ee97a5c8e7d1cc3084c276b.bindTooltip(
+                `<div>
+                     景泰
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b5eb948bd6bc7af781e6bf5bd717f595 = L.marker(
+                [37.9282, 102.637],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_2f9bd48f96aaead5298eb06cb487d7fa = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d2755c402625c81c4a1a5445c71459ae = $(`<div id="html_d2755c402625c81c4a1a5445c71459ae" style="width: 100.0%; height: 100.0%;">武威</div>`)[0];
+            popup_2f9bd48f96aaead5298eb06cb487d7fa.setContent(html_d2755c402625c81c4a1a5445c71459ae);
+        
+
+        marker_b5eb948bd6bc7af781e6bf5bd717f595.bindPopup(popup_2f9bd48f96aaead5298eb06cb487d7fa)
+        ;
+
+        
+    
+    
+            marker_b5eb948bd6bc7af781e6bf5bd717f595.bindTooltip(
+                `<div>
+                     武威
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_4a609475e24547a1f30cd08c1edd8467 = L.marker(
+                [38.9252, 100.4498],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_9606645f512d7764d4ebe899dc6346a2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_686af06f033abbab3509f96c74e00f52 = $(`<div id="html_686af06f033abbab3509f96c74e00f52" style="width: 100.0%; height: 100.0%;">張掖</div>`)[0];
+            popup_9606645f512d7764d4ebe899dc6346a2.setContent(html_686af06f033abbab3509f96c74e00f52);
+        
+
+        marker_4a609475e24547a1f30cd08c1edd8467.bindPopup(popup_9606645f512d7764d4ebe899dc6346a2)
+        ;
+
+        
+    
+    
+            marker_4a609475e24547a1f30cd08c1edd8467.bindTooltip(
+                `<div>
+                     張掖
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f36691c58e88c616cf0ca18942abd696 = L.marker(
+                [39.7731, 98.2892],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_0f79d042707cadc180d5d5a7f12ae96b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7cc00c68ecf3baec8e9f6e7082ef5e5e = $(`<div id="html_7cc00c68ecf3baec8e9f6e7082ef5e5e" style="width: 100.0%; height: 100.0%;">嘉峪關</div>`)[0];
+            popup_0f79d042707cadc180d5d5a7f12ae96b.setContent(html_7cc00c68ecf3baec8e9f6e7082ef5e5e);
+        
+
+        marker_f36691c58e88c616cf0ca18942abd696.bindPopup(popup_0f79d042707cadc180d5d5a7f12ae96b)
+        ;
+
+        
+    
+    
+            marker_f36691c58e88c616cf0ca18942abd696.bindTooltip(
+                `<div>
+                     嘉峪關
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_ed7e03e184b8f30365eaf90f6bf564da = L.marker(
+                [40.5206, 95.7826],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_5c1706d95f562b0d203d5e5b261e72df = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6ab5a7648c67cbd36cac106d7bffdee0 = $(`<div id="html_6ab5a7648c67cbd36cac106d7bffdee0" style="width: 100.0%; height: 100.0%;">瓜州</div>`)[0];
+            popup_5c1706d95f562b0d203d5e5b261e72df.setContent(html_6ab5a7648c67cbd36cac106d7bffdee0);
+        
+
+        marker_ed7e03e184b8f30365eaf90f6bf564da.bindPopup(popup_5c1706d95f562b0d203d5e5b261e72df)
+        ;
+
+        
+    
+    
+            marker_ed7e03e184b8f30365eaf90f6bf564da.bindTooltip(
+                `<div>
+                     瓜州
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_6bfaf7585300cae720d60065666e2d68 = L.marker(
+                [40.1421, 94.6614],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_31fae08c32d481b75d03ae122bfe2819 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_202028d585f57298f15a0cfcadddf65b = $(`<div id="html_202028d585f57298f15a0cfcadddf65b" style="width: 100.0%; height: 100.0%;">敦煌</div>`)[0];
+            popup_31fae08c32d481b75d03ae122bfe2819.setContent(html_202028d585f57298f15a0cfcadddf65b);
+        
+
+        marker_6bfaf7585300cae720d60065666e2d68.bindPopup(popup_31fae08c32d481b75d03ae122bfe2819)
+        ;
+
+        
+    
+    
+            marker_6bfaf7585300cae720d60065666e2d68.bindTooltip(
+                `<div>
+                     敦煌
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_0978a2f853ba27dc4235903b9a15b4aa = L.marker(
+                [34.3416, 108.9398],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_ea56f051907ccfb3edcaa8150357bb63 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5ff34758422c5c038c779cf6c8214f6e = $(`<div id="html_5ff34758422c5c038c779cf6c8214f6e" style="width: 100.0%; height: 100.0%;">西安</div>`)[0];
+            popup_ea56f051907ccfb3edcaa8150357bb63.setContent(html_5ff34758422c5c038c779cf6c8214f6e);
+        
+
+        marker_0978a2f853ba27dc4235903b9a15b4aa.bindPopup(popup_ea56f051907ccfb3edcaa8150357bb63)
+        ;
+
+        
+    
+    
+            marker_0978a2f853ba27dc4235903b9a15b4aa.bindTooltip(
+                `<div>
+                     西安
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_53f60947100e627b7f3da68682499577 = L.marker(
+                [34.454, 113.0504],
+                {}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+    
+        var popup_d06d8ca62e1f235925054dd94166a3f2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c859b7799178e5552005c12567d453c5 = $(`<div id="html_c859b7799178e5552005c12567d453c5" style="width: 100.0%; height: 100.0%;">登封</div>`)[0];
+            popup_d06d8ca62e1f235925054dd94166a3f2.setContent(html_c859b7799178e5552005c12567d453c5);
+        
+
+        marker_53f60947100e627b7f3da68682499577.bindPopup(popup_d06d8ca62e1f235925054dd94166a3f2)
+        ;
+
+        
+    
+    
+            marker_53f60947100e627b7f3da68682499577.bindTooltip(
+                `<div>
+                     登封
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_367bccd76ca0b8eab6d6ff32b589979a = L.polyline(
+                [[34.7466, 113.6254], [34.5809, 105.7249], [36.0611, 103.8343], [37.1466, 104.0636], [37.9282, 102.637], [38.9252, 100.4498], [39.7731, 98.2892], [40.5206, 95.7826], [40.1421, 94.6614], [34.3416, 108.9398], [34.454, 113.0504], [34.7466, 113.6254]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_337b114a44fde2411dbea8734c042447);
+        
+</script>
+</html>
