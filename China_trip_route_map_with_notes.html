@@ -28,7 +28,7 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
-    
+
     const locations = [
       { name: "鄭州", coords: [34.7473, 113.6249], day: "D1, D8–D10", note: "D1: 抵達鄭州，搭乘高鐵前往天水。<br>D8: 參觀兵馬俑、驪山後返回鄭州。<br>D9: 前往登封少林寺，回鄭州自由購物。 <br>D10: 送機返回台北。<br>※住宿：鄭州建國飯店。" },
       { name: "天水", coords: [34.5809, 105.7249], day: "D1–D2", note: "D1: 高鐵抵達天水。<br>D2: 參觀麥積山石窟，前往蘭州。<br>※住宿：柏霖艾菲酒店。" },
@@ -43,6 +43,7 @@
       { name: "登封", coords: [34.4510, 113.0380], day: "D9", note: "D9: 參觀少林寺、塔林，欣賞少林功夫表演，返回鄭州。<br>※住宿：鄭州建國飯店" }
     ];
 
+   
     locations.forEach(loc => {
       const marker = L.marker(loc.coords).addTo(map);
       marker.bindPopup(`<b>${loc.name}</b>（${loc.day}）<br>${loc.note}`);
