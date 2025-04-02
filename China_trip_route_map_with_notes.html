@@ -23,13 +23,13 @@
   <div id="map"></div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([35.5, 105.5], 5);
+    const map = L.map('map').setView([35.5, 105.5], 5); // 創建地圖物件，設定初始中心點和縮放級別
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // 新增 OpenStreetMap 圖層
+      attribution: '&copy; OpenStreetMap contributors' // 設定版權資訊
+    }).addTo(map); // 將圖層新增到地圖
 
-    const locations = [
+    const locations = [ // 定義行程地點陣列，包含地點名稱、座標、日期和備註
       { name: "鄭州", coords: [34.7473, 113.6249], day: "D1, D8–D10", note: "D1: 抵達鄭州，搭乘高鐵前往天水。<br>D8: 參觀兵馬俑、驪山後返回鄭州。<br>D9: 前往登封少林寺，回鄭州自由購物。 <br>D10: 送機返回台北。<br>※住宿：鄭州建國飯店。" },
       { name: "天水", coords: [34.5809, 105.7249], day: "D1–D2", note: "D1: 高鐵抵達天水。<br>D2: 參觀麥積山石窟，前往蘭州。<br>※住宿：柏霖艾菲酒店。" },
       { name: "蘭州", coords: [36.0611, 103.8343], day: "D2–D3", note: "D2: 遊覽黃河遊覽區，夜宿蘭州。<br>D3: 前往景泰黃河石林。<br>※住宿：蘭州黃河美華酒店。" },
@@ -40,20 +40,20 @@
       { name: "瓜州", coords: [40.5187, 95.7812], day: "D5", note: "D5: 參觀大地之子、海市蜃樓，隨後前往敦煌。<br>※住宿：敦煌中州國際酒店。" },
       { name: "敦煌", coords: [40.1421, 94.6610], day: "D5–D7", note: "D5: 參觀陽關。<br>D6: 參觀莫高窟、鳴沙山月牙泉，享用烤全羊晚餐。<br>D7: 參觀古城、西千佛洞，搭機前往西安。<br>※住宿：敦煌中州國際酒店。" },
       { name: "西安", coords: [34.3416, 108.9398], day: "D7–D8", note: "D7: 抵達西安。<br>D8: 參觀兵馬俑、驪山，搭高鐵返回鄭州。<br>※住宿：西安絡繹坊LFY共用公寓。" },
-      { name: "登封", coords: [34.4510, 113.0380], day: "D9", note: "D9: 參觀少林寺、塔林，欣賞少林功夫表演，返回鄭州。<br>※住宿：鄭州建國飯店" }
+      { name: "登封", coords: [34.4510, 113.0380], day: "D9", note: "D9: 參觀少林寺、塔林，欣賞少林功夫表演，返回鄭州。<br>※住宿：鄭州建國飯店" } // ... 其他地點資訊
     ];
 
    
-    locations.forEach(loc => {
-      const marker = L.marker(loc.coords).addTo(map);
-      marker.bindPopup(`<b>${loc.name}</b>（${loc.day}）<br>${loc.note}`);
-      marker.bindTooltip(loc.name, { permanent: false, direction: 'top' });
+    locations.forEach(loc => { // 遍歷地點陣列，為每個地點新增標記和彈出視窗
+      const marker = L.marker(loc.coords).addTo(map); // 創建標記物件
+      marker.bindPopup(`<b>${loc.name}</b>（${loc.day}）<br>${loc.note}`); // 設定彈出視窗內容
+      marker.bindTooltip(loc.name, { permanent: false, direction: 'top' }); // 設定滑鼠懸停時顯示的工具提示
     });
 
-    const landRoute = locations.slice(1, 9).map(l => l.coords);
-    L.polyline(landRoute, { color: 'red', weight: 3 }).addTo(map);
+    const landRoute = locations.slice(1, 9).map(l => l.coords); // 提取陸路行程地點的座標
+    L.polyline(landRoute, { color: 'red', weight: 3 }).addTo(map);  // 繪製陸路行程線，設定顏色和粗細
 
-    L.polyline([
+    L.polyline([ // 繪製敦煌到西安的航線
       locations[8].coords,
       locations[9].coords
     ], {
@@ -63,7 +63,7 @@
       opacity: 0.7
     }).addTo(map);
 
-    L.polyline([
+    L.polyline([ // 鄭州至天水
       locations[0].coords,
       locations[1].coords,
     ], {
@@ -72,7 +72,7 @@
       dashArray: '2, 10'
     }).addTo(map);
     
-    L.polyline([
+    L.polyline([ // 西安至鄭州
       locations[9].coords,
       locations[0].coords,
     ], {
@@ -81,7 +81,7 @@
       dashArray: '5, 10'
     }).addTo(map);
     
-    L.polyline([
+    L.polyline([ // 登封至鄭州
       locations[10].coords,
       locations[0].coords
     ], {
@@ -92,7 +92,7 @@
 
     const summaryText = `絲路之旅_行程簡表\nD1 5月30日：鄭州 → 天水\n    抵達鄭州國際機場後，前往鄭州高鐵站，搭乘高鐵前往天水。\n    住宿：柏霖艾菲酒店。\nD2 5月31日：天水 → 蘭州\n    參觀麥積山石窟，隨後乘車前往蘭州。\n    遊覽黃河遊覽區。\n    住宿：蘭州黃河美華酒店。\nD3 6月1日：蘭州 → 景泰 → 武威\n    前往景泰，參觀黃河石林。\n    乘車前往武威。\n    住宿：金陵大酒店。\nD4 6月2日：武威 → 張掖 → 嘉峪關\n    早餐後乘車前往張掖，參觀七彩丹霞。\n    前往嘉峪關。\n    住宿：嘉峪關諾金酒店。\nD5 6月3日：嘉峪關 → 瓜州 → 敦煌\n    參觀嘉峪關城樓。\n    前往瓜州，參觀大地之子和海市蜃樓。\n    前往敦煌，參觀陽關。\n    住宿：敦煌中州國際酒店。\nD6 6月4日：敦煌\n    參觀莫高窟和鳴沙山月牙泉。\n    晚餐安排烤全羊。\n    住宿：敦煌中州國際酒店。\nD7 6月5日：敦煌 → 西安\n    參觀古城和西千佛洞。\n    下午乘飛機返回西安。\n    住宿：西安絡繹坊LFY共用公寓。\nD8 6月6日：西安 → 鄭州\n    參觀兵馬俑和驪山。\n    行程結束，送高鐵站。\n    住宿：鄭州建國飯店。\nD9 6月7日：鄭州 → 登封 → 鄭州\n    早餐後前往少林寺，參觀塔林和少林功夫表演。\n    返回鄭州，自由購物。\n    住宿：鄭州建國飯店。\nD10 6月8日：鄭州 → 臺北\n    早餐後送飛機。`;
 
-    const summaryLabel = L.marker([37.5187, 98.5000], {
+    const summaryLabel = L.marker([37.5187, 98.5000], { // 行程簡表標記 
       icon: L.divIcon({
         className: 'summary-label',
         html: '<div style="background: #F08080; border: 1px solid #666; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 14px;">行程簡表</div>',
@@ -101,11 +101,11 @@
       })
     }).addTo(map);
 
-    summaryLabel.bindPopup(`<div class='summary-popup'>${summaryText}</div>`);
+    summaryLabel.bindPopup(`<div class='summary-popup'>${summaryText}</div>`); // 行程簡表彈出視窗   
     
     const summaryTextA = `鄭州→天水→蘭州→景泰→武威→張掖→嘉峪關\n→瓜州→敦煌→西安→鄭州   (-by DeepSeek)\n\n◆鄭州啟程向天水，麥積煙雨洗煩憂\n◆蘭州拉麵暖胃頭，景泰石林畫中遊\n◆武威蹄聲踏風走，張掖丹霞披彩綢\n◆嘉峪雄關鎮邊陲，瓜州蜜瓜甜心喉\n◆敦煌飛天舞絲路，長安燈火映鼓樓\n◆繞行千里歸鄭後，大漠風情心底留`;
 
-    const summaryLabelA = L.marker([36.5187, 98.5000], {
+    const summaryLabelA = L.marker([36.5187, 98.5000], { // 順口溜
       icon: L.divIcon({
         className: 'summary-labelA',
         html: '<div style="background:#FFFFCC; border: 1px solid #666; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px;">《西遊繞口令》</div>',
@@ -114,8 +114,7 @@
       })
     }).addTo(map);
     
-    summaryLabelA.bindPopup(`<div class='summary-popup'>${summaryTextA}</div>`);
-    
+    summaryLabelA.bindPopup(`<div class='summary-popup'>${summaryTextA}</div>`); // 順口溜彈出視窗
   </script>
 </body>
 </html>
