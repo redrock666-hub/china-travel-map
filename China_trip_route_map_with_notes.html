@@ -102,6 +102,20 @@
     }).addTo(map);
 
     summaryLabel.bindPopup(`<div class='summary-popup'>${summaryText}</div>`);
+    
+    const summaryTextA = `鄭州→天水→蘭州→景泰→武威→張掖→嘉峪關\n→瓜州→敦煌→西安→鄭州   (-by DeepSeek)\n\n◆鄭州啟程向天水，麥積煙雨洗煩憂\n◆蘭州拉麵暖胃頭，景泰石林畫中遊\n◆武威蹄聲踏風走，張掖丹霞披彩綢\n◆嘉峪雄關鎮邊陲，瓜州蜜瓜甜心喉\n◆敦煌飛天舞絲路，長安燈火映鼓樓\n◆繞行千里歸鄭後，大漠風情心底留`;
+
+    const summaryLabelA = L.marker([36.5187, 98.5000], {
+      icon: L.divIcon({
+        className: 'summary-labelA',
+        html: '<div style="background:#FFFFCC; border: 1px solid #666; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px;">《西遊繞口令》</div>',
+        iconSize: [110, 30],
+        iconAnchor: [50, 15]
+      })
+    }).addTo(map);
+    
+    summaryLabelA.bindPopup(`<div class='summary-popup'>${summaryTextA}</div>`);
+    
   </script>
 </body>
 </html>
