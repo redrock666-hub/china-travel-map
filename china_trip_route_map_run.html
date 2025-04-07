@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>絲路行程互動地圖</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body { margin: 0; display: flex; flex-direction: column; height: 100vh; }
+    #map { flex: 1; }
+    .summary-popup {
+      white-space: pre-wrap;
+      font-size: 0.9em;
+      line-height: 1.4em;
+      width: 500px;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .summary-labelA-popup {
+      white-space: pre-wrap;
+      font-size: 0.9em;
+      line-height: 1.4em;
+      width: 270px;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .summary-label:hover div,
+    .summary-labelA:hover div {
+      background-color: #ffd700;
+      transform: scale(0.85);
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([35.5, 105.5], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const locations = [
+        { name: "鄭州", coords: [34.7473, 113.6249], day: "D1, D8–D10", note: "D1: 抵達鄭州，搭乘高鐵前往天水。<br>D8: 參觀兵馬俑、驪山後返回鄭州。<br>D9: 前往登封少林寺，回鄭州自由購物。<br>D10: 送機返回台北。<br>住宿：鄭州建國飯店。" },
+        { name: "天水", coords: [34.5809, 105.7249], day: "D1–D2", note: "D1: 高鐵抵達天水。<br>D2: 參觀麥積山石窟，前往蘭州。<br>住宿：柏霖艾菲酒店。" },
+        { name: "蘭州", coords: [36.0611, 103.8343], day: "D2–D3", note: "D2: 遊覽黃河遊覽區，夜宿蘭州。<br>D3: 前往景泰黃河石林。<br>住宿：蘭州黃河美華酒店。" },
+        { name: "景泰", coords: [37.1477, 104.0658], day: "D3", note: "D3: 參觀黃河石林，隨後前往武威。<br>住宿：金陵大酒店。" },
+        { name: "武威", coords: [37.9283, 102.6410], day: "D3–D4", note: "D4: 前往張掖，參觀七彩丹霞。<br>住宿：嘉峪關諾金酒店。" },
+        { name: "張掖", coords: [38.9259, 100.4498], day: "D4", note: "D4: 參觀七彩丹霞，隨後前往嘉峪關。<br>住宿：嘉峪關諾金酒店。" },
+        { name: "嘉峪關", coords: [39.7719, 98.2892], day: "D4–D5", note: "D5: 參觀嘉峪關城樓，前往瓜州。<br>住宿：敦煌中州國際酒店。" },
+        { name: "瓜州", coords: [40.5187, 95.7812], day: "D5", note: "D5: 參觀大地之子、海市蜃樓，隨後前往敦煌。<br>住宿：敦煌中州國際酒店。" },
+        { name: "敦煌", coords: [40.1421, 94.6610], day: "D5–D7", note: "D5: 參觀陽關。<br>D6: 參觀莫高窟、鳴沙山月牙泉，享用烤全羊晚餐。<br>D7: 參觀古城、西千佛洞，搭機前往西安。<br>住宿：敦煌中州國際酒店。" },
+        { name: "西安", coords: [34.3416, 108.9398], day: "D7–D8", note: "D7: 抵達西安。<br>D8: 參觀兵馬俑、驪山，搭高鐵返回鄭州。<br>住宿：西安絡繹坊LFY共用公寓。" },
+        { name: "登封", coords: [34.4510, 113.0380], day: "D9", note: "D9: 參觀少林寺、塔林，欣賞少林功夫表演，<br>返回鄭州。<br>住宿：鄭州建國飯店。" }
+    ];
+
+    // 添加地點標記
+    locations.forEach(loc => {
+      L.marker(loc.coords).addTo(map).bindPopup(`<b>${loc.name}</b>（${loc.day}）<br>${loc.note}`);
+    });
+
+    // 繪製陸路路線
+    const landRoute = locations.slice(1, 9).map(l => l.coords);
+    L.polyline(landRoute, { color: 'red', weight: 3 }).addTo(map);
+
+    // 繪製飛行路線
+    function generateArcPoints(start, end, numPoints = 100, arcHeight = 3.2) {
+      const points = [];
+      for (let i = 0; i <= numPoints; i++) {
+        const t = i / numPoints;
+        const lat = start[0] + (end[0] - start[0]) * t;
+        const lng = start[1] + (end[1] - start[1]) * t;
+        const curveLat = lat - arcHeight * Math.sin(Math.PI * t);
+        points.push([curveLat, lng]);
+      }
+      return points;
+    }
+    const flightPath = generateArcPoints(locations[8].coords, locations[9].coords, 200, 3.2);
+    L.polyline(flightPath, { color: 'blue', weight: 3, dashArray: '5, 10', opacity: 0.7 }).addTo(map);
+
+    // 定義交通工具圖示
+    const trainIcon = L.divIcon({ html: '🚄', className: 'train-icon', iconSize: [48, 48] });  // Increased size to 48x48
+    const busIcon = L.divIcon({ html: '🚌', className: 'bus-icon', iconSize: [48, 48] });    // Increased size to 48x48
+    const planeIcon = L.divIcon({ html: '✈️', className: 'plane-icon', iconSize: [48, 48] });  // Increased size to 48x48
+
+    // 初始化交通工具標記
+    let trainMarker1 = null;
+    let busMarker1 = null;
+    let planeMarker = null;
+    let trainMarker2 = null;
+    let busMarker2 = null;
+
+    let trainIndex1 = 0, busIndex1 = 0, planeIndex = 0, trainIndex2 = 0, busIndex2 = 0;
+    let animationInterval;
+    let currentStage = 0;
+    let trainSpeed = 3000;
+    let busSpeed = 3000;
+    let planeSpeed = 6000;
+    let trainPath1Points = [];
+    let busPathPoints = [];
+    let planePathPoints = [];
+    let trainPath2Points = [];
+    let busPath2Points = [];
+    let isAnimating = false;
+
+    function clearMarkers() {
+      if (trainMarker1) { map.removeLayer(trainMarker1); trainMarker1 = null; }
+      if (busMarker1) { map.removeLayer(busMarker1); busMarker1 = null; }
+      if (planeMarker) { map.removeLayer(planeMarker); planeMarker = null; }
+      if (trainMarker2) { map.removeLayer(trainMarker2); trainMarker2 = null; }
+      if (busMarker2) { map.removeLayer(busMarker2); busMarker2 = null; }
+    }
+
+    function generatePoints(path, speed) {
+        const points = [];
+        let distance = 0;
+        for (let i = 0; i < path.length - 1; i++) {
+            const start = path[i];
+            const end = path[i + 1];
+             distance = L.latLng(start).distanceTo(end);
+            const numPoints = Math.ceil(distance / speed);
+            for (let j = 0; j <= numPoints; j++) {
+                const t = j / numPoints;
+                const lat = start[0] + (end[0] - start[0]) * t;
+                const lng = start[1] + (end[1] - start[1]) * t;
+                points.push([lat, lng]);
+            }
+        }
+        return points;
+    }
+
+    function startAnimation() {
+      if (isAnimating) return;
+      isAnimating = true;
+      clearInterval(animationInterval);
+      currentStage = 0;
+      clearMarkers();
+      trainIndex1 = 0;
+      busIndex1 = 0;
+      planeIndex = 0;
+      trainIndex2 = 0;
+      busIndex2 = 0;
+      trainPath1Points = generatePoints(trainPath1, trainSpeed);
+      busPathPoints = generatePoints(busPath, busSpeed);
+      planePathPoints = generatePoints(smoothFlightPath, planeSpeed);
+      trainPath2Points = generatePoints(trainPath2, trainSpeed);
+      busPath2Points = generatePoints(busPath2, busSpeed);
+      animateStage();
+    }
+
+    function animateStage() {
+      let speed = 100;
+      let currentPoints = [];
+      if (currentStage > 4) {
+        isAnimating = false;
+        return;
+      }
+      animationInterval = setInterval(() => {
+        let stageFinished = true;
+        switch (currentStage) {
+          case 0:
+            speed = trainSpeed;
+            currentPoints = trainPath1Points;
+            if (!trainMarker1) {
+              trainMarker1 = L.marker(locations[0].coords, { icon: trainIcon }).addTo(map);
+            }
+            if (trainIndex1 < currentPoints.length - 1) {
+              trainIndex1++;
+              trainMarker1.setLatLng(currentPoints[trainIndex1]);
+              stageFinished = false;
+            } else {
+              map.removeLayer(trainMarker1);
+              trainMarker1 = null;
+              trainIndex1 = 0;
+              currentStage++;
+            }
+            break;
+          case 1:
+            speed = busSpeed;
+            currentPoints = busPathPoints;
+            if (!busMarker1) {
+              busMarker1 = L.marker(locations[1].coords, { icon: busIcon }).addTo(map);
+            }
+            if (busIndex1 < currentPoints.length - 1) {
+              busIndex1++;
+              busMarker1.setLatLng(currentPoints[busIndex1]);
+              stageFinished = false;
+            } else {
+              map.removeLayer(busMarker1);
+              busMarker1 = null;
+              busIndex1 = 0;
+              currentStage++;
+            }
+            break;
+          case 2:
+            speed = planeSpeed;
+            currentPoints = planePathPoints;
+            if (!planeMarker) {
+              planeMarker = L.marker(smoothFlightPath[0], { icon: planeIcon }).addTo(map);
+            }
+            if (planeIndex < currentPoints.length - 1) {
+              planeIndex++;
+              planeMarker.setLatLng(currentPoints[planeIndex]);
+              stageFinished = false;
+            } else {
+              map.removeLayer(planeMarker);
+              planeMarker = null;
+              planeIndex = 0;
+              currentStage++;
+            }
+            break;
+          case 3:
+            speed = trainSpeed;
+            currentPoints = trainPath2Points;
+            if (!trainMarker2) {
+              trainMarker2 = L.marker(locations[9].coords, { icon: trainIcon }).addTo(map);
+            }
+            if (trainIndex2 < currentPoints.length - 1) {
+              trainIndex2++;
+              trainMarker2.setLatLng(currentPoints[trainIndex2]);
+              stageFinished = false;
+            } else {
+              map.removeLayer(trainMarker2);
+              trainMarker2 = null;
+              trainIndex2 = 0;
+              currentStage++;
+            }
+            break;
+          case 4:
+            speed = busSpeed;
+            currentPoints = busPath2Points;
+            if (!busMarker2) {
+              busMarker2 = L.marker(locations[0].coords, { icon: busIcon }).addTo(map);
+            }
+            if (busIndex2 < currentPoints.length - 1) {
+              busIndex2++;
+              busMarker2.setLatLng(currentPoints[busIndex2]);
+              stageFinished = false;
+            } else {
+              map.removeLayer(busMarker2);
+              busMarker2 = null;
+              busIndex2 = 0;
+              currentStage = 0;
+            }
+            break;
+        }
+
+        if (stageFinished) {
+          clearInterval(animationInterval);
+          setTimeout(animateStage, 1000);
+        }
+      }, 20);
+    }
+
+    // 定義路線
+    const trainPath1 = [locations[0].coords, locations[1].coords];
+    const busPath = locations.slice(1, 9).map(l => l.coords);
+    const smoothFlightPath = flightPath;
+    const trainPath2 = [locations[9].coords, locations[0].coords];
+    const busPath2 = [locations[0].coords, locations[10].coords, locations[0].coords];
+
+    // 啟動動畫
+    startAnimation();
+
+    // 添加線條
+    L.polyline([locations[0].coords, locations[1].coords], { color: 'red', weight: 4, dashArray: '2, 10' }).addTo(map);
+    L.polyline([locations[9].coords, locations[0].coords], { color: 'purple', weight: 3, dashArray: '5, 10' }).addTo(map);
+    L.polyline([locations[10].coords, locations[0].coords], { color: 'green', weight: 3, dashArray: '1, 5' }).addTo(map);
+
+    const summaryText = `絲路之旅_行程簡表 <br>●D1 5月30日：鄭州 → 天水 ️<br>抵達鄭州機場 ✈️，前往鄭州高鐵站 ，搭高鐵前往天水 ️。<br>住宿：柏霖艾菲酒店 。<br>●D2 5月31日：天水 → 蘭州 ️<br>參觀麥積山石窟 ，隨後乘車前往蘭州。<br>遊覽黃河遊覽區 ️。<br>住宿：蘭州黃河美華酒店 。<br>●D3 6月1日：蘭州 → 景泰 → 武威 ️<br>前往景泰，參觀黃河石林 ️。<br>乘車前往武威 。<br>住宿：金陵大酒店 。<br>●D4 6月2日：武威 → 張掖 → 嘉峪關 <br>早餐後乘車前往張掖 ，參觀七彩丹霞 ️。<br>前往嘉峪關。<br>住宿：嘉峪關諾金酒店 。<br>●D5 6月3日：嘉峪關 → 瓜州 → 敦煌 ️<br>參觀嘉峪關城樓 。<br>前往瓜州，參觀大地之子和海市蜃樓 。<br>前往敦煌，參觀陽關 。<br>住宿：敦煌中州國際酒店 。<br>●D6 6月4日：敦煌 ️<br>參觀莫高窟  和鳴沙山月牙泉 ️。<br>晚餐安排烤全羊 。<br>住宿：敦煌中州國際酒店 。<br>●D7 6月5日：敦煌 → 西安 ✈️<br>參觀古城和西千佛洞 。<br>下午乘飛機返回西安。<br>住宿：西安絡繹坊LFY共用公寓 。<br>●D8 6月6日：西安 → 鄭州 <br>參觀兵馬俑  和驪山 ️。<br>行程結束，送高鐵站 。<br>住宿：鄭州建國飯店 。<br>●D9 6月7日：鄭州 → 登封 → 鄭州 <br>早餐後前往少林寺 ，參觀塔林和少林功夫表演 。<br>返回鄭州，自由購物 ️。<br>住宿：鄭州建國飯店 。<br>●D10 6月8日：鄭州 → 臺北 ✈️<br>早餐後送飛機 。`;
+
+    const summaryLabel = L.marker([37.5187, 98.5000], {
+      icon: L.divIcon({
+        className: 'summary-label',
+        html: '<div style="background: #F08080; border: 1px solid #666; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 14px;">行程簡表</div>',
+        iconSize: [80, 30],
+        iconAnchor: [50, 15]
+      })
+    }).addTo(map);
+
+    summaryLabel.bindPopup(`<div class='summary-popup' style='width: 420px;'>${summaryText}</div>`);
+
+    summaryLabel.on('click', function() {
+      const bounds = L.latLngBounds(locations.map(l => l.coords));
+      map.fitBounds(bounds);
+    });
+
+    const summaryTextA = `鄭州→天水→蘭州→景泰→武威→張掖→嘉峪關<br>→瓜州→敦煌→西安→鄭州<br><br>◆鄭州啟程向天水 ️，麥積煙雨洗煩憂 ☁️<br>◆蘭州拉麵暖胃頭 ，景泰石林畫中遊 ️<br>◆武威蹄聲踏風走 ，張掖丹霞披彩綢 <br>◆嘉峪雄關鎮邊陲 ，瓜州蜜瓜甜心喉 <br>◆敦煌飛天舞絲路 ️，長安燈火映鼓樓 <br>◆繞行千里歸鄭後 ，大漠風情心底留 ️`;
+
+    const summaryLabelA = L.marker([36.5187, 98.5000], {
+      icon: L.divIcon({
+        className: 'summary-labelA',
+        html: '<div style="background:#FFFFCC; border: 1px solid #666; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px;">《西遊繞口令》</div>',
+        iconSize: [110, 30],
+        iconAnchor: [50, 15]
+      })
+    }).addTo(map);
+
+    summaryLabelA.bindPopup(`<div class='summary-labelA-popup'>${summaryTextA}</div>`);
+
+  </script>
+</body>
+</html>
