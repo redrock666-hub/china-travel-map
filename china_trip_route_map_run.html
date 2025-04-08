@@ -82,9 +82,10 @@
     L.polyline(flightPath, { color: 'blue', weight: 3, dashArray: '5, 10', opacity: 0.7 }).addTo(map);
 
     // 定義交通工具圖示
-    const trainIcon = L.divIcon({ html: '🚄', className: 'train-icon', iconSize: [48, 48] });  // Increased size to 48x48
-    const busIcon = L.divIcon({ html: '🚌', className: 'bus-icon', iconSize: [48, 48] });    // Increased size to 48x48
-    const planeIcon = L.divIcon({ html: '✈️', className: 'plane-icon', iconSize: [48, 48] });  // Increased size to 48x48
+    const trainIcon = L.divIcon({ html: '🚄', className: 'train-icon', iconSize: [48, 48] });
+    const busIcon = L.divIcon({ html: '🚌', className: 'bus-icon', iconSize: [48, 48] });
+    const planeIcon = L.divIcon({ html: '✈️', className: 'plane-icon', iconSize: [48, 48] });
+    const trainIconReversed = L.divIcon({ html: '<span style="transform: scaleX(-1); display:inline-block;">🚄</span>', className: 'train-icon', iconSize: [48, 48] });
 
     // 初始化交通工具標記
     let trainMarker1 = null;
@@ -216,7 +217,7 @@
             speed = trainSpeed;
             currentPoints = trainPath2Points;
             if (!trainMarker2) {
-              trainMarker2 = L.marker(locations[9].coords, { icon: trainIcon }).addTo(map);
+              trainMarker2 = L.marker(locations[9].coords, { icon: trainIconReversed }).addTo(map); // Use the reversed icon here
             }
             if (trainIndex2 < currentPoints.length - 1) {
               trainIndex2++;
@@ -288,7 +289,7 @@
       map.fitBounds(bounds);
     });
 
-   const summaryTextA = `鄭州→天水→蘭州→景泰→武威→張掖→嘉峪關\n→瓜州→敦煌→西安→鄭州   (-by DeepSeek) 🧭\n\n◆鄭州啟程向天水 🛤️，麥積煙雨洗煩憂 ☁️\n◆蘭州拉麵暖胃頭 🍜，景泰石林畫中遊 🏞️\n◆武威蹄聲踏風走 🐎，張掖丹霞披彩綢 🎨\n◆嘉峪雄關鎮邊陲 🏯，瓜州蜜瓜甜心喉 🍈\n◆敦煌飛天舞絲路 🏜️，長安燈火映鼓樓 🏮\n◆繞行千里歸鄭後 🧭，大漠風情心底留 🏜️`;
+    const summaryTextA = `鄭州→天水→蘭州→景泰→武威→張掖→嘉峪關\n→瓜州→敦煌→西安→鄭州   (-by DeepSeek) 🧭\n\n◆鄭州啟程向天水 🛤️，麥積煙雨洗煩憂 ☁️\n◆蘭州拉麵暖胃頭 🍜，景泰石林畫中遊 🏞️\n◆武威蹄聲踏風走 🐎，張掖丹霞披彩綢 🎨\n◆嘉峪雄關鎮邊陲 🏯，瓜州蜜瓜甜心喉 🍈\n◆敦煌飛天舞絲路 🏜️，長安燈火映鼓樓 🏮\n◆繞行千里歸鄭後 🧭，大漠風情心底留 🏜️`;
 
     const summaryLabelA = L.marker([36.5187, 98.5000], {
       icon: L.divIcon({
@@ -304,4 +305,3 @@
   </script>
 </body>
 </html>
-
