@@ -1,20 +1,25 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>協坤月曆</title>
-    <style>
-        body {
-            font-family: "Microsoft JhengHei", "PingFang TC", "Heiti TC", sans-serif;
-        }
-    </style>
 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0106)http://www.smia.gov.tw/calendar.htm -->
+<!-- saved from url=(0022)http://internet.e-mail --><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" ""><!-- saved from url=(0049)http://joke.maillist.com.tw/files/08/00080501.htm --><!-- saved from url=(0022)http://internet.e-mail --><HTML><HEAD><META 
+content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE>月曆</TITLE><!-- ********************************************
+
+************************************************** --> 
 <META name="keywords" content="農曆; 陽曆; 月曆; 節日; 時區; 節氣; 八字; 干支; 生肖; gregorian solar; chinese lunar; calendar;"> 
 <META name="robots" content="All"> 
 <META name="description" content="gregorian solar calendar and chinese lunar calendar"> 
 <META http-equiv="Content-Type" content="text/html; charset=big5"> 
 <SCRIPT language="JavaScript">
+
+//<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+//<html xmlns="http://www.w3.org/1999/xhtml">
+//<head><title>萬年曆</title>
+//<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+//<meta content="all" name="robots">
+//<script language="javascript">
+
+
 
 <!--
 /*****************************************************************************
@@ -297,7 +302,7 @@ this.solarTerms    = ''; //節氣
 //===== 某年的第n個節氣為幾日(從0小寒起算)
 var solarTermBase = new Array(4,19,3,18,4,19,4,19,4,20,4,20,6,22,6,22,6,22,7,22,6,21,6,21);
 var solarTermIdx = '0123415341536789:;<9:=<>:=1>?012@015@015@015AB78CDE8CD=1FD01GH01GH01IH01IJ0KLMN;LMBEOPDQRST0RUH0RVH0RWH0RWM0XYMNZ[MB\\]PT^_ST`_WH`_WH`_WM`_WM`aYMbc[Mde]Sfe]gfh_gih_Wih_WjhaWjka[jkl[jmn]ope]qph_qrh_sth_W';
-var solarTermOS = '211122112122112121222211221122122222212222222221222122222232222222222222222233223232223232222222322222112122112121222211222122222222222222222222322222112122112121222111211122122222212221222221221122122222222222222222222223222232222232222222222222112122112121122111211122122122212221222221221122122222222222222221211122112122212221222211222122222232222232222222222222112122112121111111222222112121112121111111222222111121112121111111211122112122112121122111222212111121111121111111111122112122112121122111211122112122212221222221222211111121111121111111222111111121111111111111111122112121112121111111222111111111111111111111111122111121112121111111221122122222212221222221222111011111111111111111111122111121111121111111211122112122112121122211221111011111101111111111111112111121111121111111211122112122112221222211221111011111101111111110111111111121111111111111111122112121112121122111111011111121111111111111111011111111112111111111111011111111111111111111221111011111101110111110111011011111111111111111221111011011101110111110111011011111101111111111211111001011101110111110110011011111101111111111211111001011001010111110110011011111101111111110211111001011001010111100110011011011101110111110211111001011001010011100110011001011101110111110211111001010001010011000100011001011001010111110111111001010001010011000111111111111111111111111100011001011001010111100111111001010001010000000111111000010000010000000100011001011001010011100110011001011001110111110100011001010001010011000110011001011001010111110111100000010000000000000000011001010001010011000111100000000000000000000000011001010001010000000111000000000000000000000000011001010000010000000';
+var solarTermOS = '211122112122112121222211221122122222212222222221222122222232222222222222222233223232223232222222322222112122112121222211222122222222222222222222322222112122112121222111211122122222212221222221221122122222222222222222222223222232222232222222222222112122112121122111211122122122212221222221221122122222222222222221211122112122212221222211222122222232222232222222222222112122112121111111222222112121112121111111222222111121112121111111211122112122112121122111222212111121111121111111111122112122112121122111211122112122212221222221222211111121111121111111222111111121111111111111111122111121112121111111221122122222212221222221222111011111111111111111111122111121111121111111211122112122112221222211221111011111101111111110111111111121111111111111111122112121112121122111111011111121111111111111111011111111112111111111111011111111111111111111221111011111101110111110111011011111111111111111221111011011101110111110111011011111101111111111211111001011101110111110110011011111101111111111211111001011001010111110110011011111101111111110211111001011001010111100110011011011101110111110211111001011001010011100110011001011101110111110211111001010001010011000100011001011001010111110111111001010001010011000111111111111111111111111100011001011001010111100111111001010001010000000111111000010000010000000100011001011001010011100110011001011001110111110100011001010001010011000110011001011001010111110111100000010000000000000000011001010001010011000111100000000000000000000000011001010000010000000111000000000000000000000000011001010000010000000';
 
 function sTerm(y,n) {
    return(solarTermBase[n] +  Math.floor( solarTermOS.charAt( ( Math.floor(solarTermIdx.charCodeAt(y-1900)) - 48) * 24 + n  ) ) );
@@ -732,7 +737,40 @@ if (tM + 1==1 && tD<2) {alert('過節啦!! 今天是元旦!  hi123.ailexun.com/t
 //<style>body{margin:0;background:#FFF;}.red{color:#F00;}.green{color:#090;}.blue{color:#00F;}#wrap{width:568px;margin:20px auto 0;overflow:hidden;}#YMBG{width:568px;height:336px;position:absolute;z-index:-1;top:20px;padding:56px 0 0;font:120px/140px "Arial Black";background:#EFF7FA;color:#E3EEF9;text-align:center;}.todyaColor{background:url(/img/today.gif) no-repeat center center;}.calendar{height:392px;font:12px Arial;border:solid #A1C6D9;border-width:1px 0 0 1px;}.calendar th{height:24px;font:bold 16px/24px Arial;background:#ADCEEF;border:1px solid;border-color:#FFF #A1C6D9 #A1C6D9 #FFF;}.calendar td{width:75px;height:50px;text-align:center;padding:2px;border:1px solid;border-color:#FFF #A1C6D9 #A1C6D9 #FFF;}.calendar td strong{display:block;font:bold 24px/28px Arial;}.calendar select{font:12px Arial;}.calendar .title{height:28px;font:16px Arial;background:none;}.topic{width:200px;padding:2px;background:#222;font:12px/18px Verdana;filter:alpha(opacity=90);opacity:0.9}.topic .con{padding:2px;}.gday{color:#FFF;}.nday{color:#F3F;}.ganzhi{color:#FF0;}.hlyi{color:#0F0;}.hlji{color:#F60;}.gzage{color:#F00;}.gznl{color:#090;}.festival{background:#CFC;padding:2px;}#footer{width:570px;text-align:center;margin:auto;font:12px/18px Arial;padding:8px;}#right{float:left;width:120px;padding-left:10px;}</style>
 
 </script>
-<style>body{margin:0;background:#FFF;}.red{color:#F00;}.green{color:#090;}.blue{color:#00F;}#wrap{width:852px;margin:30px auto 0;overflow:hidden;}#YMBG{width:852px;height:504px;position:absolute;z-index:-1;top:30px;padding:84px 0 0;font:180px/210px "Arial Black";background:#EFF7FA;color:#E3EEF9;text-align:center;}.todyaColor{BACKGROUND-COLOR: aqua;}.calendar{height:588px;font:18px Arial;border:solid #A1C6D9;border-width:1px 0 0 1px;}.calendar th{height:36px;font:bold 24px/36px Arial;background:#ADCEEF;border:1px solid;border-color:#FFF #A1C6D9 #A1C6D9 #FFF;}.calendar td{width:112.5px;height:75px;text-align:center;padding:2px;border:1px solid;border-color:#FFF #A1C6D9 #A1C6D9 #FFF;}.calendar td strong{display:block;font:bold 36px/42px Arial;}.calendar select{font:18px Arial;}.calendar .title{height:42px;font:24px Arial;background:none;}.topic{width:300px;padding:2px;background:#222;font:18px/27px Verdana;filter:alpha(opacity=90);opacity:0.9}.topic .con{padding:2px;}.gday{color:#FFF;}.nday{color:#F3F;}.ganzhi{color:#FF0;}.hlyi{color:#0F0;}.hlji{color:#F60;}.gzage{color:#F00;}.gznl{color:#090;}.festival{background:#CFC;padding:2px;}#footer{width:855px;text-align:center;margin:auto;font:18px/27px Arial;padding:12px;}#right{float:left;width:180px;padding-left:15px;}</style>
+<style>
+/* 原有的樣式 */
+body{margin:0;background:#FFF;}.red{color:#F00;}.green{color:#090;}.blue{color:#00F;}#wrap{width:852px;margin:30px auto 0;overflow:hidden;}#YMBG{width:852px;height:504px;position:absolute;z-index:-1;top:30px;padding:84px 0 0;font:180px/210px "Arial Black";background:#EFF7FA;color:#E3EEF9;text-align:center;}.todyaColor{BACKGROUND-COLOR: aqua;}.calendar{height:588px;font:18px Arial;border:solid #A1C6D9;border-width:1px 0 0 1px;}.calendar th{height:36px;font:bold 24px/36px Arial;background:#ADCEEF;border:1px solid;border-color:#FFF #A1C6D9 #A1C6D9 #FFF;}.calendar td{width:112.5px;height:75px;text-align:center;padding:2px;border:1px solid;border-color:#FFF #A1C6D9 #A1C6D9 #FFF;}.calendar td strong{display:block;font:bold 36px/42px Arial;}.calendar select{font:18px Arial;}.calendar .title{height:42px;font:24px Arial;background:none;}.topic{width:300px;padding:2px;background:#222;font:18px/27px Verdana;filter:alpha(opacity=90);opacity:0.9}.topic .con{padding:2px;}.gday{color:#FFF;}.nday{color:#F3F;}.ganzhi{color:#FF0;}.hlyi{color:#0F0;}.hlji{color:#F60;}.gzage{color:#F00;}.gznl{color:#090;}.festival{background:#CFC;padding:2px;}#footer{width:855px;text-align:center;margin:auto;font:18px/27px Arial;padding:12px;}#right{float:left;width:180px;padding-left:15px;}
+/* 新增的搜尋框樣式 */
+.google-search-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 1px solid #A1C6D9;
+}
+.google-search-container input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+.google-search-container button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #4285F4;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+.google-search-container button:hover {
+    background-color: #357ae8;
+}
+</style>
 
 </head>
 <body onload="initial()">
@@ -757,17 +795,17 @@ document.body.style.background=hval;
 <th colspan="7" class="title">
 西曆 <select onchange="changeCld()" name="SY">
 <script language="javascript">
-		  <!--
+          <!--
             for(i=1900;i<2050;i++) document.write('<option>'+i)
           //-->
-		  </script>
+          </script>
 </select>
 年 <select onchange="changeCld()" name="SM">
 <script language="javascript">
-		  <!--
+          <!--
             for(i=1;i<13;i++) document.write('<option>'+i)
           //-->
-		  </script>
+          </script>
 </select>
 月
 <span id="GZ"></span>
@@ -782,7 +820,7 @@ document.body.style.background=hval;
 <th>五</th>
 <th><span class="green">六</span></th></tr>
 <script language=javascript>
-		<!--
+        <!--
             var gNum
             for(i=0;i<6;i++) {
                document.write('<tr>')
@@ -798,7 +836,7 @@ document.body.style.background=hval;
                document.write('</tr>')
             }
         //-->
-		</script>
+        </script>
 </table>
 </div><div id="footer">
 陽曆中<span class="red">紅色</span>/<span class="green">綠色</span>表示節假日，農曆中<span class="green">綠色</span>表示為24節氣日，<span class="red">紅色</span>表示為傳統節日，<span class="blue">藍色</span>為公眾節假日
@@ -814,5 +852,14 @@ document.body.style.background=hval;
 </table>
 </form>
 <div id="detail" style="position:absolute;top:0;left:0;"></div>
+
+<!-- 新增的 Google 搜尋框 -->
+<div class="google-search-container">
+    <form action="https://www.google.com/search" method="get">
+        <input type="text" name="q" placeholder="使用 Google 搜尋..." required>
+        <button type="submit">搜尋</button>
+    </form>
+</div>
+
 </body>
 </html>
