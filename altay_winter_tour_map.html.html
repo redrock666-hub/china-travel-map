@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8" />
+  <title>❄️ 冬季專屬定制·雪落阿勒泰 12 日互動地圖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background: #090d16;
+      color: #f1f5f9;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* 頂部導航列 */
+    header {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      flex-shrink: 0;
+    }
+    .header-title h1 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #f8fafc;
+    }
+    .header-title p {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 75vw;
+    }
+    .badge {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    /* 主地圖容器 */
+    #main-container {
+      flex: 1;
+      position: relative;
+      display: flex;
+      overflow: hidden;
+    }
+    #map {
+      flex: 1;
+      height: 100%;
+      background: #0b1329;
+      z-index: 1;
+    }
+
+    /* 浮動播放巡航控制條 */
+    .controls-panel {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 12px;
+      border-radius: 30px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-action {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.2s;
+    }
+    .btn-action:hover { background: #0369a1; }
+    .speed-slider {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: #94a3b8;
+    }
+    .speed-slider input {
+      width: 60px;
+      accent-color: #38bdf8;
+      cursor: pointer;
+    }
+
+    /* 資訊面板（電腦版懸浮右側，手機版轉為抽屜） */
+    .info-panel {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 380px;
+      max-height: calc(100% - 28px);
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+      z-index: 950;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .drawer-handle-bar {
+      display: none;
+      padding: 8px 0 4px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .drawer-pill {
+      width: 42px;
+      height: 4.5px;
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 4px;
+      margin: 0 auto;
+    }
+    .panel-header {
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(30, 41, 59, 0.65);
+      flex-shrink: 0;
+    }
+    .panel-header h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .drawer-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-drawer-ctrl {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #bae6fd;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-drawer-ctrl:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* 單排橫向滑動天數列 */
+    .day-selector-wrap {
+      padding: 8px 12px;
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+    }
+    .day-selector {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .day-selector::-webkit-scrollbar { display: none; }
+    .day-btn {
+      flex: 0 0 auto;
+      background: rgba(51, 65, 85, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 5px 12px;
+      border-radius: 18px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .day-btn.active {
+      background: #0284c7;
+      color: #ffffff;
+      font-weight: 700;
+      border-color: #38bdf8;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+    }
+
+    /* 詳細內容滾動區塊 */
+    .panel-content {
+      padding: 12px 14px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+      flex: 1;
+    }
+    .detail-card {
+      background: rgba(30, 41, 59, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .detail-card h4 {
+      color: #f8fafc;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+    .detail-card .meta {
+      font-size: 0.75rem;
+      color: #38bdf8;
+      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      background: rgba(14, 165, 233, 0.1);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border-left: 3px solid #38bdf8;
+    }
+    .detail-card .desc {
+      color: #cbd5e1;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+    .detail-card .hotel {
+      padding-top: 8px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.12);
+      font-size: 0.76rem;
+      color: #fcd34d;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 浮動展開懸浮按鈕（當完全收合時在右下角提供快速召回） */
+    .fab-reopen {
+      position: absolute;
+      bottom: 20px;
+      right: 16px;
+      background: #0284c7;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 30px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      z-index: 850;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* 地圖樣式 */
+    .spot-pin {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #38bdf8;
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
+      cursor: pointer;
+    }
+    .car-marker {
+      font-size: 26px;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.7));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ====== 手機直向螢幕自適應優化 ====== */
+    @media (max-width: 768px) {
+      header {
+        padding: 8px 12px;
+      }
+      .header-title h1 {
+        font-size: 0.92rem;
+      }
+      .header-title p {
+        font-size: 0.68rem;
+        max-width: 85vw;
+      }
+      .controls-panel {
+        top: 10px;
+        left: 10px;
+        padding: 4px 10px;
+        gap: 8px;
+      }
+      .btn-action {
+        padding: 4px 10px;
+        font-size: 0.7rem;
+      }
+      .speed-slider {
+        font-size: 0.68rem;
+      }
+      .speed-slider input {
+        width: 45px;
+      }
+
+      /* 底部抽屜：預設適度高度（約 38vh，保留超過 60% 螢幕給地圖） */
+      .info-panel {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: 38vh;
+        border-radius: 18px 18px 0 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        box-shadow: 0 -8px 30px rgba(0,0,0,0.8);
+        z-index: 950;
+      }
+      .drawer-handle-bar {
+        display: block;
+      }
+
+      /* 狀態 1：最小化（只保留按鈕切換列與標題，高度約 90px，釋放 90% 地圖視野） */
+      .info-panel.collapsed {
+        max-height: 94px;
+      }
+      .info-panel.collapsed .panel-content {
+        display: none;
+      }
+
+      /* 狀態 2：全開（展開至 78vh，方便閱讀長篇景點介紹） */
+      .info-panel.expanded {
+        max-height: 78vh;
+      }
+
+      .panel-content {
+        padding: 10px 14px 75px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-title">
+      <h1>❄️ 雪落阿勒泰·冬季 12 日 <span class="badge">1+1 頭等艙</span></h1>
+      <p>烏魯木齊 ➔ S21 ➔ 烏倫古湖 ➔ 布爾津 ➔ 白哈巴 ➔ 喀納斯 ➔ 禾木 ➔ 克拉瑪依 ➔ 天池</p>
+    </div>
+  </header>
+
+  <div id="main-container">
+    <div id="map"></div>
+
+    <!-- 左上角巡航控制面板 -->
+    <div class="controls-panel">
+      <button class="btn-action" id="btnToggleAnim">
+        <span id="playIcon">⏸️</span> <span id="playText">暫停</span>
+      </button>
+      <div class="speed-slider">
+        <span>速度</span>
+        <input type="range" id="speedRange" min="1" max="5" value="3" />
+      </div>
+      <button class="btn-action" style="background:#475569;" id="btnResetView">🗺️ 全覽</button>
+    </div>
+
+    <!-- 抽屜收起後若想一鍵展開的懸浮按鈕 -->
+    <button class="fab-reopen" id="fabReopen">📋 查看行程</button>
+
+    <!-- 底部抽屜卡片（支援三段收展：最小化 / 標準 / 展開） -->
+    <div class="info-panel" id="infoPanel">
+      <div class="drawer-handle-bar" id="drawerHandle" title="點擊切換展開/收合">
+        <div class="drawer-pill"></div>
+      </div>
+      
+      <div class="panel-header">
+        <h3 id="panelTitle">📍 行程詳情瀏覽</h3>
+        <div class="drawer-actions">
+          <button class="btn-drawer-ctrl" id="btnMinDrawer" title="收起面板以看大地圖">🔽 縮至最小</button>
+          <button class="btn-drawer-ctrl" id="btnExpandDrawer" title="展開看完整內容">🔼 展開全文</button>
+        </div>
+      </div>
+
+      <!-- 單排橫向滑動天數列（即使縮至最小依然可快速切換站點） -->
+      <div class="day-selector-wrap">
+        <div class="day-selector" id="daySelector"></div>
+      </div>
+
+      <!-- 每日資訊內容卡片 -->
+      <div class="panel-content">
+        <div id="itineraryDetail"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // --- 1. 行程數據 ---
+    const itinerary = [
+      {
+        day: 1,
+        title: "抵達烏魯木齊·接機日",
+        location: "烏魯木齊市",
+        coords: [43.8256, 87.6168],
+        distance: "0 km",
+        duration: "無車程",
+        highlight: "專屬接機日，管家依照航班抵達時間安排 1+1 豪華頭等艙接機。可自由漫步國際大巴扎，品味地道烤包子與羊肉串，調整狀態迎接北疆雪國之旅。",
+        hotel: "住宿自理"
+      },
+      {
+        day: 2,
+        title: "S21沙漠高速 - 烏倫古湖 - 布爾津",
+        location: "布爾津童話小鎮",
+        coords: [47.7011, 86.8654],
+        waypoints: [
+          [43.8256, 87.6168],
+          [46.5298, 87.5211],
+          [47.1654, 87.2345],
+          [47.7011, 86.8654]
+        ],
+        distance: "550 km",
+        duration: "約 6 小時",
+        highlight: "穿越壯闊的 S21 沙漠高速。下午抵達『離海最遠的海』烏倫古湖，欣賞萬頃冰封湖泊與冬日蒸騰水汽。傍晚入住充滿歐式童話氛圍的布爾津小鎮。",
+        hotel: "蘇通麗呈五鑽酒店"
+      },
+      {
+        day: 3,
+        title: "中哈大峽谷 - 孤獨的樹 - 白哈巴",
+        location: "西北第一村·白哈巴",
+        coords: [48.6946, 86.7824],
+        waypoints: [
+          [47.7011, 86.8654],
+          [48.3120, 86.5890],
+          [48.5520, 86.6890],
+          [48.6946, 86.7824]
+        ],
+        distance: "150 km",
+        duration: "約 3 小時",
+        highlight: "深入中哈邊境西北第一村白哈巴。打卡《我的阿勒泰》同款『孤獨的樹』，欣賞雪原邊境的落葉松與圖瓦人尖頂小木屋升起的裊裊炊煙，宛如冬日油畫。",
+        hotel: "梵淨牧舍景區客棧"
+      },
+      {
+        day: 4,
+        title: "白哈巴 - 夢幻喀納斯湖 - 夜觀星空",
+        location: "喀納斯湖景區",
+        coords: [48.7185, 87.0378],
+        waypoints: [
+          [48.6946, 86.7824],
+          [48.7185, 87.0378]
+        ],
+        distance: "50 km",
+        duration: "約 1 小時",
+        highlight: "來到『神的後花園』喀納斯湖畔漫步，可自選體驗雪地摩托車穿梭林海雪原。入夜後在無光害的深山木屋仰望清冽浩瀚的銀河星空。",
+        hotel: "一顆花楸景區客棧"
+      },
+      {
+        day: 5,
+        title: "神仙灣晨霧 - 登觀魚台 - 喀納斯",
+        location: "神仙灣 & 觀魚台",
+        coords: [48.6854, 87.0125],
+        waypoints: [
+          [48.7185, 87.0378],
+          [48.6854, 87.0125]
+        ],
+        distance: "10 km",
+        duration: "景區短途",
+        highlight: "清晨搭專車前往神仙灣欣賞水墨仙境晨霧。挑戰登頂 1068 級台階的觀魚台，極目俯瞰整片月牙形冰封喀納斯湖、泰加林與綿延阿爾泰雪山。",
+        hotel: "一顆花楸景區客棧"
+      },
+      {
+        day: 6,
+        title: "馬拉爬犁 - 潑水成冰 - 圖瓦古村",
+        location: "喀納斯圖瓦古村",
+        coords: [48.7050, 87.0250],
+        waypoints: [
+          [48.6854, 87.0125],
+          [48.7050, 87.0250]
+        ],
+        distance: "10 km",
+        duration: "景區慢活",
+        highlight: "乘坐傳統馬拉爬犁穿行白雪世界，體驗極寒冬日的『潑水成冰』秒變冰晶弧線。漫步圖瓦人木刻楞小屋，感悟純粹原生態的林中歲月。",
+        hotel: "一顆花楸景區客棧"
+      },
+      {
+        day: 7,
+        title: "水墨三灣(月亮灣/臥龍灣) - 禾木篝火晚會",
+        location: "神的自留地·禾木村",
+        coords: [48.5714, 87.4298],
+        waypoints: [
+          [48.7050, 87.0250],
+          [48.6420, 87.0380],
+          [48.6180, 87.0420],
+          [48.5714, 87.4298]
+        ],
+        distance: "80 km",
+        duration: "約 2.5 小時",
+        highlight: "徒步水墨三灣木棧道，俯瞰湛藍柔美的冰封彎月與巨龍伏波。午後抵達禾木村，夜晚圍繞篝火起舞，仰望漫天繁星。",
+        hotel: "禾木星空景區住宿"
+      },
+      {
+        day: 8,
+        title: "吉克普林初級滑雪 - 禾木旅拍 - 尋極光",
+        location: "吉克普林滑雪場",
+        coords: [48.5300, 87.4700],
+        waypoints: [
+          [48.5714, 87.4298],
+          [48.5300, 87.4700]
+        ],
+        distance: "20 km",
+        duration: "滑雪放鬆",
+        highlight: "贈送 4 小時吉克普林頂級滑雪體驗，暢滑阿勒泰鬆軟頂級粉雪！下午享受專業單反/無人機旅拍，夜間在雪頂小木屋守候極光與滿天星斗。",
+        hotel: "禾木星空景區住宿"
+      },
+      {
+        day: 9,
+        title: "哈登日照金山 - 白樺林漫步 - 禾木下午茶",
+        location: "禾木哈登觀景台",
+        coords: [48.5820, 87.4350],
+        waypoints: [
+          [48.5714, 87.4298],
+          [48.5820, 87.4350]
+        ],
+        distance: "20 km",
+        duration: "晨曦慢漫",
+        highlight: "清晨登上哈登觀景台，俯瞰炊煙升起、金光灑向雪頂木屋的『日照金山』奇景。走過百年禾木吊橋、漫步白樺林雪景，在網紅秋千旁享用愜意下午茶。",
+        hotel: "禾木星空景區住宿"
+      },
+      {
+        day: 10,
+        title: "吉克普林二次滑雪 - 前往克拉瑪依",
+        location: "石油之城·克拉瑪依",
+        coords: [45.5799, 84.8893],
+        waypoints: [
+          [48.5714, 87.4298],
+          [47.7011, 86.8654],
+          [45.5799, 84.8893]
+        ],
+        distance: "470 km",
+        duration: "約 6 小時",
+        highlight: "把握清晨時光二次滑雪，隨後搭乘 1+1 頭等艙南下告別深山雪原，傍晚抵達現代化石油之城克拉瑪依舒適休整。",
+        hotel: "海樽四鑽酒店"
+      },
+      {
+        day: 11,
+        title: "克拉瑪依 - 冰封天山天池 - 烏魯木齊",
+        location: "天山天池景區",
+        coords: [43.8860, 88.1310],
+        waypoints: [
+          [45.5799, 84.8893],
+          [43.8860, 88.1310],
+          [43.8256, 87.6168]
+        ],
+        distance: "420 km",
+        duration: "約 4.5 小時",
+        highlight: "探訪國家 5A 級世界自然遺產『瑤池』天池。背倚終年雪白的博格達峰，一覽冰湖、霧凇與雲杉倒影，如同一面剔透翡翠。晚間返回烏魯木齊。",
+        hotel: "住宿自理"
+      },
+      {
+        day: 12,
+        title: "烏魯木齊送機·依依惜別",
+        location: "烏魯木齊機場",
+        coords: [43.9071, 87.5097],
+        waypoints: [
+          [43.8256, 87.6168],
+          [43.9071, 87.5097]
+        ],
+        distance: "30 km",
+        duration: "專車送機",
+        highlight: "北疆冰雪奇旅圓滿收官！管家根據航班時間專車送機，珍藏阿勒泰純淨的粉雪與童話木屋記憶，平安返回溫暖的家。",
+        hotel: "返回溫暖的家"
+      }
+    ];
+
+    // --- 2. 地圖初始化 ---
+    const isMobile = window.innerWidth <= 768;
+    const map = L.map('map', {
+      center: [46.3, 86.5],
+      zoom: isMobile ? 5 : 6,
+      zoomControl: false
+    });
+
+    L.control.zoom({ position: isMobile ? 'topright' : 'topleft' }).addTo(map);
+
+    // 官方 OpenStreetMap 高清圖資
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 18
+    }).addTo(map);
+
+    // --- 3. 路線與標記 ---
+    const routeCoordinates = [];
+
+    itinerary.forEach((item) => {
+      if (item.waypoints) {
+        item.waypoints.forEach(pt => routeCoordinates.push(pt));
+      } else {
+        routeCoordinates.push(item.coords);
+      }
+
+      const customPin = L.divIcon({
+        className: 'custom-spot-wrap',
+        html: `<div class="spot-pin" title="D${item.day} ${item.location}"></div>`,
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
+      });
+
+      const marker = L.marker(item.coords, { icon: customPin }).addTo(map);
+
+      const popupHtml = `
+        <div style="font-size:0.75rem; color:#38bdf8; font-weight:700;">DAY ${item.day}</div>
+        <div style="font-weight:700; margin:2px 0 4px; color:#fff;">${item.title}</div>
+        <div style="font-size:0.75rem; color:#94a3b8;"><b>📍 地點：</b>${item.location}</div>
+        <div style="font-size:0.75rem; color:#94a3b8;"><b>🚗 車程：</b>${item.distance} (${item.duration})</div>
+      `;
+      marker.bindPopup(popupHtml);
+      marker.on('click', () => selectDay(item.day));
+    });
+
+    const mainPolyline = L.polyline(routeCoordinates, {
+      color: '#0284c7',
+      weight: 3.5,
+      opacity: 0.85,
+      dashArray: '6, 6',
+      lineJoin: 'round'
+    }).addTo(map);
+
+    // --- 4. 平滑小巴巡航動畫 ---
+    function interpolatePath(points, stepMeters = 3000) {
+      const dense = [];
+      for (let i = 0; i < points.length - 1; i++) {
+        const p1 = points[i];
+        const p2 = points[i + 1];
+        const dist = L.latLng(p1).distanceTo(L.latLng(p2));
+        const steps = Math.max(1, Math.floor(dist / stepMeters));
+        for (let j = 0; j <= steps; j++) {
+          const ratio = j / steps;
+          dense.push([
+            p1[0] + (p2[0] - p1[0]) * ratio,
+            p1[1] + (p2[1] - p1[1]) * ratio
+          ]);
+        }
+      }
+      return dense;
+    }
+
+    const denseRoute = interpolatePath(routeCoordinates, 2500);
+
+    const carIcon = L.divIcon({
+      className: 'car-marker',
+      html: '🚐',
+      iconSize: [30, 30],
+      iconAnchor: [15, 15]
+    });
+    const vehicleMarker = L.marker(denseRoute[0], { icon: carIcon }).addTo(map);
+
+    let currentIndex = 0;
+    let isPlaying = true;
+    let speedFactor = 3;
+    let animTimer = null;
+
+    function stepAnimation() {
+      if (!isPlaying) return;
+      currentIndex = (currentIndex + speedFactor) % denseRoute.length;
+      vehicleMarker.setLatLng(denseRoute[currentIndex]);
+      animTimer = requestAnimationFrame(stepAnimation);
+    }
+    stepAnimation();
+
+    const btnToggle = document.getElementById('btnToggleAnim');
+    const playIcon = document.getElementById('playIcon');
+    const playText = document.getElementById('playText');
+    btnToggle.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        playIcon.textContent = '⏸️';
+        playText.textContent = '暫停';
+        stepAnimation();
+      } else {
+        playIcon.textContent = '▶️';
+        playText.textContent = '繼續';
+        cancelAnimationFrame(animTimer);
+      }
+    });
+
+    document.getElementById('speedRange').addEventListener('input', (e) => {
+      speedFactor = parseInt(e.target.value, 10);
+    });
+
+    document.getElementById('btnResetView').addEventListener('click', () => {
+      fitFullRoute();
+    });
+
+    function fitFullRoute() {
+      const padding = isMobile ? [20, 20] : [60, 60];
+      map.fitBounds(mainPolyline.getBounds(), { padding: padding });
+    }
+
+    // --- 5. 抽屜面板三段式收展控制（核心優化） ---
+    const daySelector = document.getElementById('daySelector');
+    const itineraryDetail = document.getElementById('itineraryDetail');
+    const infoPanel = document.getElementById('infoPanel');
+    const btnMinDrawer = document.getElementById('btnMinDrawer');
+    const btnExpandDrawer = document.getElementById('btnExpandDrawer');
+    const drawerHandle = document.getElementById('drawerHandle');
+    const fabReopen = document.getElementById('fabReopen');
+
+    // 生成單排橫向天數按鈕
+    itinerary.forEach(item => {
+      const btn = document.createElement('button');
+      btn.className = `day-btn ${item.day === 1 ? 'active' : ''}`;
+      btn.id = `btnDay${item.day}`;
+      btn.textContent = `D${item.day}`;
+      btn.addEventListener('click', () => {
+        selectDay(item.day);
+        // 如果目前是最小化狀態，點擊天數時自動恢復成適度預覽狀態
+        if (infoPanel.classList.contains('collapsed')) {
+          setDrawerState('normal');
+        }
+      });
+      daySelector.appendChild(btn);
+    });
+
+    function selectDay(dayNum) {
+      document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`btnDay${dayNum}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+
+      const data = itinerary.find(d => d.day === dayNum);
+      if (!data) return;
+
+      itineraryDetail.innerHTML = `
+        <div class="detail-card">
+          <h4>DAY ${data.day} · ${data.title}</h4>
+          <div class="meta">
+            <span>🚗 里程：${data.distance}</span>
+            <span>⏱️ 車程：${data.duration}</span>
+            <span>📍 目標：${data.location}</span>
+          </div>
+          <div class="desc">${data.highlight}</div>
+          <div class="hotel">🏨 <b>指定住宿：</b> ${data.hotel}</div>
+        </div>
+      `;
+
+      const targetZoom = isMobile ? 8 : 9;
+      if (isMobile) {
+        // 依抽屜目前高度動態微調視角偏置
+        const isCollapsed = infoPanel.classList.contains('collapsed');
+        const offsetLat = isCollapsed ? data.coords[0] : (data.coords[0] - 0.18);
+        map.flyTo([offsetLat, data.coords[1]], targetZoom, { duration: 1.0 });
+      } else {
+        map.flyTo(data.coords, targetZoom, { duration: 1.0 });
+      }
+    }
+
+    // 狀態機：'collapsed'（縮至最小） | 'normal'（預設適中） | 'expanded'（完整展開）
+    let drawerMode = 'normal';
+
+    function setDrawerState(mode) {
+      drawerMode = mode;
+      infoPanel.classList.remove('collapsed', 'expanded');
+
+      if (mode === 'collapsed') {
+        infoPanel.classList.add('collapsed');
+        btnMinDrawer.textContent = '🔼 展開內容';
+        btnExpandDrawer.style.display = 'none';
+        fabReopen.style.display = 'none';
+      } else if (mode === 'expanded') {
+        infoPanel.classList.add('expanded');
+        btnMinDrawer.textContent = '🔽 縮小';
+        btnExpandDrawer.textContent = '標準 ◽';
+        btnExpandDrawer.style.display = 'inline-block';
+        fabReopen.style.display = 'none';
+      } else {
+        // normal 狀態
+        btnMinDrawer.textContent = '🔽 縮至最小';
+        btnExpandDrawer.textContent = '🔼 展開全文';
+        btnExpandDrawer.style.display = 'inline-block';
+        fabReopen.style.display = 'none';
+      }
+    }
+
+    // 縮小按鈕切換邏輯
+    btnMinDrawer.addEventListener('click', () => {
+      if (drawerMode === 'collapsed') {
+        setDrawerState('normal');
+      } else if (drawerMode === 'expanded') {
+        setDrawerState('normal');
+      } else {
+        setDrawerState('collapsed');
+      }
+    });
+
+    // 展開按鈕切換邏輯
+    btnExpandDrawer.addEventListener('click', () => {
+      if (drawerMode === 'expanded') {
+        setDrawerState('normal');
+      } else {
+        setDrawerState('expanded');
+      }
+    });
+
+    // 點擊頂部橫把手（Pill Bar）直接循環切換：縮小 <-> 標準
+    drawerHandle.addEventListener('click', () => {
+      if (drawerMode === 'collapsed') {
+        setDrawerState('normal');
+      } else {
+        setDrawerState('collapsed');
+      }
+    });
+
+    // 初始預設
+    selectDay(2);
+    setTimeout(() => {
+      fitFullRoute();
+    }, 600);
+  </script>
+</body>
+</html>
