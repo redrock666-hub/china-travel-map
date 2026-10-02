@@ -207,13 +207,22 @@
       background: rgba(51, 65, 85, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: #cbd5e1;
-      padding: 5px 12px;
+      padding: 5px 10px;
       border-radius: 18px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 500;
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.15;
+    }
+    .day-btn .btn-date {
+      font-size: 0.62rem;
+      color: #94a3b8;
+      margin-top: 1px;
     }
     .day-btn.active {
       background: #0284c7;
@@ -221,6 +230,9 @@
       font-weight: 700;
       border-color: #38bdf8;
       box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+    }
+    .day-btn.active .btn-date {
+      color: #e0f2fe;
     }
 
     /* 詳細內容滾動區塊 */
@@ -447,7 +459,7 @@
         left: 0;
         right: 0;
         width: 100%;
-        max-height: 44vh;
+        max-height: 48vh;
         border-radius: 18px 18px 0 0;
         border-left: none;
         border-right: none;
@@ -519,33 +531,37 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // --- 1. 行程數據（含機票航班詳情、地標座標、特色亮點與舌尖美味） ---
+    // --- 1. 行程數據（含明確日期標籤、機票航班詳情、地標座標與舌尖美味） ---
     const itinerary = [
       {
         day: 1,
-        title: "台北啟程·轉機抵達烏魯木齊·接機日",
-        location: "烏魯木齊地窩堡機場 / 市區",
+        date: "11/1~2",
+        dateFull: "11月1日(五) ~ 11月2日(六)",
+        title: "台北啟程 ➔ 上海轉機 ➔ 抵達烏市 (接機休整日)",
+        location: "烏魯木齊地窩堡機場 / 市區飯店",
         badgeName: "抵達烏市",
         coords: [43.8256, 87.6168],
         distance: "0 km (飛航)",
-        duration: "轉機抵達",
-        tags: ["✈️ 台北上海烏市", "🚐 專屬頭等艙接機", "🏨 入住休整"],
+        duration: "飛航轉機",
+        tags: ["✈️ 11/1下午台北出發", "🌙 11/2凌晨抵達烏市", "🚐 專車接機休整"],
         flight: {
-          title: "去程航班（已出票 · 東航/上航）",
+          title: "去程航班（已出票 · 11/1 出發）",
           legs: [
             { from: "台北 (TPE)", to: "上海 (PVG)", time: "11/01 15:00 → 17:05", no: "MU5008 (東航)" },
             { from: "上海 (PVG)", to: "烏魯木齊 (URC)", time: "11/01 19:00 → 11/02 00:40", no: "FM9223 (上航)" }
           ],
-          tips: "💡 轉機提醒：上海浦東轉機時間約 1 小時 55 分。抵達烏魯木齊地窩堡機場時間為 11/2 凌晨 00:40，提領行李出關後，管家已安排 1+1 豪華頭等艙專車在機場守候接機，直達市區飯店安心補眠！"
+          tips: "⚠️ 重要時間備忘：請於 11/1(五) 13:00 前抵達桃園機場辦理登機。上海轉機時間約 1 小時 55 分；班機於 11/2 凌晨 00:40 抵達烏魯木齊，專車接機前往市區飯店好好補眠，11/2 白天在烏市調適時差自由漫步，迎接 11/3 北疆冰雪之旅！"
         },
-        highlight: "今天是專屬接機日！搭乘班機抵達烏魯木齊（11/2 凌晨 00:40 落地），專車接機入住市區飯店好好休整。白天若有精神可自由漫步國際大巴扎，感受濃郁西域風情與熱氣騰騰的炭火烤包子，養精蓄銳迎接明天的北疆冰雪之約！",
+        highlight: "【出發與接機日】11/1 下午自台北啟程，經上海轉機於 11/2 凌晨 00:40 抵達烏魯木齊地窩堡機場。專車接機入住市區飯店補眠休息。11/2 白天可自由漫步國際大巴扎，品味地道烤包子與手抓飯，養精蓄銳準備明日出發！",
         food: "【全疆美食集大成】饢坑現烤爆汁烤包子、黃胡蘿蔔手抓飯、皮帶麵拌大盤雞、老酸奶配蜂蜜。",
-        hotel: "住宿自理",
+        hotel: "住宿自理 (烏魯木齊市區)",
         zoomMobile: 8,
         zoomDesktop: 9
       },
       {
         day: 2,
+        date: "11/3",
+        dateFull: "11月3日(日)",
         title: "S21沙漠高速 - 烏倫古湖 - 布爾津",
         location: "布爾津童話小鎮",
         badgeName: "布爾津",
@@ -567,6 +583,8 @@
       },
       {
         day: 3,
+        date: "11/4",
+        dateFull: "11月4日(一)",
         title: "中哈大峽谷 - 孤獨的樹 - 白哈巴",
         location: "西北第一村·白哈巴",
         badgeName: "白哈巴",
@@ -588,6 +606,8 @@
       },
       {
         day: 4,
+        date: "11/5",
+        dateFull: "11月5日(二)",
         title: "白哈巴 - 夢幻喀納斯湖邊漫步 - 夜觀星空",
         location: "喀納斯湖畔碼頭",
         badgeName: "喀納斯湖",
@@ -598,7 +618,7 @@
         ],
         distance: "50 km",
         duration: "約 1 小時",
-        tags: ["💎 神的後花園", "❄️️ 冰封變色湖", "🌌 零光害銀河極光"],
+        tags: ["💎 神的後花園", "❄ 冰封變色湖", "🌌 零光害銀河極光"],
         highlight: "來到『人間淨土』喀納斯湖畔漫步，欣賞冰面藍冰與枯樹共築的清冷水墨畫。可自選體驗雪地摩托車穿梭林海雪原，夜間仰望純淨深山銀河星空。",
         food: "【深山雪鄉盛宴】阿勒泰清燉大尾羊肉（肉嫩奶香無羶味，沾少許粗鹽即鮮甜）、暖身黑加侖熱茶。",
         hotel: "一顆花楸景區客棧",
@@ -607,6 +627,8 @@
       },
       {
         day: 5,
+        date: "11/6",
+        dateFull: "11月6日(三)",
         title: "登觀魚台(1068階) - 俯瞰喀納斯全景",
         location: "觀魚台頂峰",
         badgeName: "觀魚台頂",
@@ -626,6 +648,8 @@
       },
       {
         day: 6,
+        date: "11/7",
+        dateFull: "11月7日(四)",
         title: "圖瓦古村慢活 - 馬拉爬犁 - 潑水成冰",
         location: "喀納斯圖瓦古村",
         badgeName: "圖瓦老村",
@@ -645,6 +669,8 @@
       },
       {
         day: 7,
+        date: "11/8",
+        dateFull: "11月8日(五)",
         title: "水墨三灣晨霧 - 神仙灣/月亮灣 - 禾木篝火晚會",
         location: "神的自留地·禾木村",
         badgeName: "禾木村",
@@ -665,6 +691,8 @@
       },
       {
         day: 8,
+        date: "11/9",
+        dateFull: "11月9日(六)",
         title: "吉克普林嗨滑頂級粉雪 - 禾木專業旅拍",
         location: "吉克普林滑雪場",
         badgeName: "吉克普林",
@@ -684,6 +712,8 @@
       },
       {
         day: 9,
+        date: "11/10",
+        dateFull: "11月10日(日)",
         title: "哈登日照金山 - 白樺林漫步 - 禾木雪景下午茶",
         location: "哈登觀景台",
         badgeName: "哈登觀景台",
@@ -703,6 +733,8 @@
       },
       {
         day: 10,
+        date: "11/11",
+        dateFull: "11月11日(一)",
         title: "吉克普林二次滑雪 - 前往克拉瑪依",
         location: "石油之城·克拉瑪依",
         badgeName: "克拉瑪依",
@@ -723,6 +755,8 @@
       },
       {
         day: 11,
+        date: "11/12",
+        dateFull: "11月12日(二)",
         title: "克拉瑪依 - 冰封天山天池 - 烏魯木齊",
         location: "天山天池景區",
         badgeName: "天山天池",
@@ -737,13 +771,15 @@
         tags: ["🏔️ 終年雪峰博格達", "🧊 瑤池冰魄翡翠", "🌲 霧凇雲杉林海"],
         highlight: "探訪國家 5A 級世界自然遺產『瑤池』天山天池。背倚終年雪白的博格達峰，一覽冰湖、霧凇與雲杉倒影，如同一面剔透翡翠。晚間返回烏魯木齊市區。",
         food: "【回歸烏市慶功盛宴】昌吉九碗三行子、回民椒麻雞、酥脆香嫩烤羊排、新疆特色卡瓦斯發酵汽飲。",
-        hotel: "住宿自理",
+        hotel: "住宿自理 (烏魯木齊市區)",
         zoomMobile: 8,
         zoomDesktop: 9
       },
       {
         day: 12,
-        title: "烏魯木齊專車送機·搭機返回台北",
+        date: "11/13",
+        dateFull: "11月13日(三)",
+        title: "烏魯木齊專車送機 ➔ 上海轉機 ➔ 返回台北",
         location: "烏魯木齊地窩堡機場 / 台北",
         badgeName: "送機返程",
         coords: [43.9071, 87.5097],
@@ -753,14 +789,14 @@
         ],
         distance: "30 km (市區至機場)",
         duration: "專車送機返程",
-        tags: ["🛫 暖心專車送機", "✈️ 上海轉機返台", "🏠 平安溫暖抵家"],
+        tags: ["🛫 清晨專車送機", "✈️ 上海轉機返台", "🏠 平安溫暖抵家"],
         flight: {
-          title: "返程航班（已出票 · 上航/東航）",
+          title: "返程航班（已出票 · 11/13 返程）",
           legs: [
             { from: "烏魯木齊 (URC)", to: "上海 (PVG)", time: "11/13 09:05 → 13:40", no: "FM9222 (上航)" },
             { from: "上海 (PVG)", to: "台北 (TPE)", time: "11/13 15:45 → 17:40", no: "MU5005 (東航)" }
           ],
-          tips: "💡 送機提醒：烏魯木齊起飛為早上 09:05，預計清晨 06:30～07:00 專車自飯店出發前往地窩堡機場辦理登機。上海浦東轉機時間約 2 小時 05 分，傍晚 17:40 平安抵達台北桃園機場！"
+          tips: "⚠️ 送機時間備忘：烏市 09:05 起飛，預計清晨 06:30～07:00 專車自飯店接往機場。上海轉機時間約 2 小時 05 分，傍晚 17:40 平安抵達台北桃園機場！"
         },
         highlight: "北疆冰雪奇旅圓滿收官！管家根據航班清晨安排專車送機前往地窩堡機場。經上海轉機後於傍晚 17:40 抵達台北，珍藏阿勒泰純淨的粉雪、圖瓦木屋晨霧與璀璨星河回憶，平安返回溫暖的家！",
         food: "【伴手禮推薦】新疆若羌紅棗、阿克蘇蘋果、巴旦木堅果、純天然黑蜂蜂蜜、手撕風乾牛肉乾。",
@@ -933,13 +969,12 @@
     const btnMinDrawer = document.getElementById('btnMinDrawer');
     const btnExpandDrawer = document.getElementById('btnExpandDrawer');
     const drawerHandle = document.getElementById('drawerHandle');
-
-    // 生成單排橫向天數按鈕
+    // 生成單排橫向天數按鈕（含日期標籤）
     itinerary.forEach(item => {
       const btn = document.createElement('button');
       btn.className = `day-btn ${item.day === 1 ? 'active' : ''}`;
       btn.id = `btnDay${item.day}`;
-      btn.textContent = `D${item.day}`;
+      btn.innerHTML = `<span>D${item.day}</span><span class="btn-date">${item.date}</span>`;
       btn.addEventListener('click', () => {
         selectDay(item.day);
         if (infoPanel.classList.contains('collapsed')) {
@@ -995,12 +1030,13 @@
 
       itineraryDetail.innerHTML = `
         <div class="detail-card">
-          <h4>DAY ${data.day} · ${data.title}</h4>
+          <h4>DAY ${data.day} · ${data.dateFull}</h4>
+          <div style="font-size:0.86rem; color:#f8fafc; font-weight:600; margin-bottom:8px;">${data.title}</div>
           ${flightHtml}
           <div class="tag-container">${tagsHtml}</div>
           <div class="meta">
             <span>🚗 里程：${data.distance}</span>
-            <span>⏱️️ 車程：${data.duration}</span>
+            <span>⏱ 車程：${data.duration}</span>
             <span>📍 目標：${data.location}</span>
           </div>
           <div class="desc">${data.highlight}</div>
