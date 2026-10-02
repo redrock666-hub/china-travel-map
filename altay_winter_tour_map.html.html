@@ -69,7 +69,7 @@
     #map {
       flex: 1;
       height: 100%;
-      background: #0b1329;
+      background: #e2e8f0;
       z-index: 1;
     }
 
@@ -292,15 +292,58 @@
       cursor: pointer;
     }
 
-    /* 地圖樣式 */
-    .spot-pin {
-      width: 14px;
-      height: 14px;
+    /* 序號 + 地名膠囊標籤樣式 */
+    .custom-spot-wrap {
+      background: transparent;
+      border: none;
+    }
+    .spot-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(15, 23, 42, 0.88);
+      color: #f8fafc;
+      padding: 3px 8px 3px 4px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(56, 189, 248, 0.5);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translate(-15px, -50%);
+      user-select: none;
+    }
+    .spot-badge:hover, .spot-badge.active {
+      background: #0284c7;
+      border-color: #ffffff;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.95);
+      transform: translate(-15px, -50%) scale(1.1);
+      z-index: 1000 !important;
+    }
+    .spot-badge-num {
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
       background: #38bdf8;
-      border: 3px solid #ffffff;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
-      cursor: pointer;
+      color: #082f49;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .spot-badge.active .spot-badge-num {
+      background: #ffffff;
+      color: #0369a1;
+    }
+    .spot-badge-name {
+      color: #f1f5f9;
+      letter-spacing: 0.2px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
     }
     .car-marker {
       font-size: 26px;
@@ -437,6 +480,7 @@
         day: 1,
         title: "抵達烏魯木齊·接機日",
         location: "烏魯木齊市",
+        badgeName: "烏魯木齊",
         coords: [43.8256, 87.6168],
         distance: "0 km",
         duration: "無車程",
@@ -447,6 +491,7 @@
         day: 2,
         title: "S21沙漠高速 - 烏倫古湖 - 布爾津",
         location: "布爾津童話小鎮",
+        badgeName: "布爾津",
         coords: [47.7011, 86.8654],
         waypoints: [
           [43.8256, 87.6168],
@@ -463,6 +508,7 @@
         day: 3,
         title: "中哈大峽谷 - 孤獨的樹 - 白哈巴",
         location: "西北第一村·白哈巴",
+        badgeName: "白哈巴",
         coords: [48.6946, 86.7824],
         waypoints: [
           [47.7011, 86.8654],
@@ -479,6 +525,7 @@
         day: 4,
         title: "白哈巴 - 夢幻喀納斯湖 - 夜觀星空",
         location: "喀納斯湖景區",
+        badgeName: "喀納斯湖",
         coords: [48.7185, 87.0378],
         waypoints: [
           [48.6946, 86.7824],
@@ -493,6 +540,7 @@
         day: 5,
         title: "神仙灣晨霧 - 登觀魚台 - 喀納斯",
         location: "神仙灣 & 觀魚台",
+        badgeName: "神仙灣/觀魚台",
         coords: [48.6854, 87.0125],
         waypoints: [
           [48.7185, 87.0378],
@@ -507,6 +555,7 @@
         day: 6,
         title: "馬拉爬犁 - 潑水成冰 - 圖瓦古村",
         location: "喀納斯圖瓦古村",
+        badgeName: "圖瓦古村",
         coords: [48.7050, 87.0250],
         waypoints: [
           [48.6854, 87.0125],
@@ -521,6 +570,7 @@
         day: 7,
         title: "水墨三灣(月亮灣/臥龍灣) - 禾木篝火晚會",
         location: "神的自留地·禾木村",
+        badgeName: "禾木村",
         coords: [48.5714, 87.4298],
         waypoints: [
           [48.7050, 87.0250],
@@ -537,6 +587,7 @@
         day: 8,
         title: "吉克普林初級滑雪 - 禾木旅拍 - 尋極光",
         location: "吉克普林滑雪場",
+        badgeName: "吉克普林",
         coords: [48.5300, 87.4700],
         waypoints: [
           [48.5714, 87.4298],
@@ -551,6 +602,7 @@
         day: 9,
         title: "哈登日照金山 - 白樺林漫步 - 禾木下午茶",
         location: "禾木哈登觀景台",
+        badgeName: "哈登觀景台",
         coords: [48.5820, 87.4350],
         waypoints: [
           [48.5714, 87.4298],
@@ -565,6 +617,7 @@
         day: 10,
         title: "吉克普林二次滑雪 - 前往克拉瑪依",
         location: "石油之城·克拉瑪依",
+        badgeName: "克拉瑪依",
         coords: [45.5799, 84.8893],
         waypoints: [
           [48.5714, 87.4298],
@@ -580,6 +633,7 @@
         day: 11,
         title: "克拉瑪依 - 冰封天山天池 - 烏魯木齊",
         location: "天山天池景區",
+        badgeName: "天山天池",
         coords: [43.8860, 88.1310],
         waypoints: [
           [45.5799, 84.8893],
@@ -595,6 +649,7 @@
         day: 12,
         title: "烏魯木齊送機·依依惜別",
         location: "烏魯木齊機場",
+        badgeName: "烏魯木齊送機",
         coords: [43.9071, 87.5097],
         waypoints: [
           [43.8256, 87.6168],
@@ -617,14 +672,30 @@
 
     L.control.zoom({ position: isMobile ? 'topright' : 'topleft' }).addTo(map);
 
-    // 官方 OpenStreetMap 高清圖資
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // 使用全球高可用性、免 API Key 的 Esri 街道地形圖作為主圖資，並設定備援
+    const primaryTile = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; Esri & OpenStreetMap',
+      maxZoom: 18,
+      subdomains: ['a', 'b', 'c']
+    });
+
+    primaryTile.on('tileerror', function() {
+      // 容錯備援：若特定網路環境無法載入，自動無縫切換到 OSM 官方鏡像
+      if (!map.hasLayer(osmFallback)) {
+        osmFallback.addTo(map);
+      }
+    });
+
+    const osmFallback = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
       maxZoom: 18
-    }).addTo(map);
+    });
+
+    primaryTile.addTo(map);
 
     // --- 3. 路線與標記 ---
     const routeCoordinates = [];
+    const markerMap = {};
 
     itinerary.forEach((item) => {
       if (item.waypoints) {
@@ -633,14 +704,22 @@
         routeCoordinates.push(item.coords);
       }
 
-      const customPin = L.divIcon({
+      const badgeHtml = `
+        <div class="spot-badge" id="badge-day-${item.day}">
+          <span class="spot-badge-num">${item.day}</span>
+          <span class="spot-badge-name">${item.badgeName || item.location}</span>
+        </div>
+      `;
+
+      const customBadge = L.divIcon({
         className: 'custom-spot-wrap',
-        html: `<div class="spot-pin" title="D${item.day} ${item.location}"></div>`,
-        iconSize: [14, 14],
-        iconAnchor: [7, 7]
+        html: badgeHtml,
+        iconSize: [0, 0],
+        iconAnchor: [0, 0]
       });
 
-      const marker = L.marker(item.coords, { icon: customPin }).addTo(map);
+      const marker = L.marker(item.coords, { icon: customBadge }).addTo(map);
+      markerMap[item.day] = marker;
 
       const popupHtml = `
         <div style="font-size:0.75rem; color:#38bdf8; font-weight:700;">DAY ${item.day}</div>
@@ -660,8 +739,8 @@
       lineJoin: 'round'
     }).addTo(map);
 
-    // --- 4. 平滑小巴巡航動畫 ---
-    function interpolatePath(points, stepMeters = 3000) {
+    // --- 4. 平滑小巴巡航動畫（大幅增加密度以降低移動速度） ---
+    function interpolatePath(points, stepMeters = 800) {
       const dense = [];
       for (let i = 0; i < points.length - 1; i++) {
         const p1 = points[i];
@@ -679,7 +758,8 @@
       return dense;
     }
 
-    const denseRoute = interpolatePath(routeCoordinates, 2500);
+    // 將步距縮細至 600 公尺，大幅增加平滑點數量
+    const denseRoute = interpolatePath(routeCoordinates, 600);
 
     const carIcon = L.divIcon({
       className: 'car-marker',
@@ -691,16 +771,24 @@
 
     let currentIndex = 0;
     let isPlaying = true;
-    let speedFactor = 3;
+    let speedFactor = 1; // 預設降為 1（慢速優雅前進）
     let animTimer = null;
+    let lastTime = 0;
+    const intervalMs = 28; // 控制每秒更新率約 35FPS，更加均勻
 
-    function stepAnimation() {
+    function stepAnimation(timestamp) {
       if (!isPlaying) return;
-      currentIndex = (currentIndex + speedFactor) % denseRoute.length;
-      vehicleMarker.setLatLng(denseRoute[currentIndex]);
+      if (!lastTime) lastTime = timestamp;
+      
+      const elapsed = timestamp - lastTime;
+      if (elapsed > intervalMs) {
+        lastTime = timestamp;
+        currentIndex = (currentIndex + speedFactor) % denseRoute.length;
+        vehicleMarker.setLatLng(denseRoute[currentIndex]);
+      }
       animTimer = requestAnimationFrame(stepAnimation);
     }
-    stepAnimation();
+    requestAnimationFrame(stepAnimation);
 
     const btnToggle = document.getElementById('btnToggleAnim');
     const playIcon = document.getElementById('playIcon');
@@ -710,7 +798,8 @@
       if (isPlaying) {
         playIcon.textContent = '⏸️';
         playText.textContent = '暫停';
-        stepAnimation();
+        lastTime = 0;
+        requestAnimationFrame(stepAnimation);
       } else {
         playIcon.textContent = '▶️';
         playText.textContent = '繼續';
@@ -718,7 +807,11 @@
       }
     });
 
-    document.getElementById('speedRange').addEventListener('input', (e) => {
+    const speedRange = document.getElementById('speedRange');
+    speedRange.min = "1";
+    speedRange.max = "3";
+    speedRange.value = "1";
+    speedRange.addEventListener('input', (e) => {
       speedFactor = parseInt(e.target.value, 10);
     });
 
@@ -762,6 +855,13 @@
       if (activeBtn) {
         activeBtn.classList.add('active');
         activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+
+      // 同步地圖上的標籤徽章高亮
+      document.querySelectorAll('.spot-badge').forEach(badge => badge.classList.remove('active'));
+      const activeBadge = document.getElementById(`badge-day-${dayNum}`);
+      if (activeBadge) {
+        activeBadge.classList.add('active');
       }
 
       const data = itinerary.find(d => d.day === dayNum);
